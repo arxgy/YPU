@@ -1,0 +1,11 @@
+Problem
+    2. always@*:    when any input data in 'begin...end' block changes, execute block.
+    3. use fork-join to assign with parallelism
+    4. how to assign #ROB, #RS, #L/Sbuffer?
+    5. how to fetch instr from 0x00?
+    模块例化时，从模块外部来讲， input 端口可以连接 wire 或 reg 型变量。这与模块声明是不同的，从模块内部来讲，input 端口必须是 wire 型变量。
+    模块例化时，从模块外部来讲，output 端口必须连接 wire 型变量。这与模块声明是不同的，从模块内部来讲，output 端口可以是 wire 或 reg 型变量。
+    6. signal ready!!!
+    7. load出buffer条件： ROB中前面无同地址store
+       store出buffer条件：算好就出
+    8. 一个周期一条指令

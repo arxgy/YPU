@@ -1,0 +1,516 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ADD	.\def.v	/^`define ADD 6'd27$/;"	c
+ADDI	.\def.v	/^`define ADDI 6'd18$/;"	c
+ADDRESS_WIDTH	.\def.v	/^`define ADDRESS_WIDTH 31:0 $/;"	c
+ADDR_WIDTH	.\common\block_ram\block_ram.v	/^  parameter ADDR_WIDTH = 6,$/;"	c
+ADDR_WIDTH	.\ram.v	/^  parameter ADDR_WIDTH = 17$/;"	c
+ADD_TAG	.\def.v	/^`define ADD_TAG 3'b000$/;"	c
+AND	.\def.v	/^`define AND 6'd36$/;"	c
+ANDI	.\def.v	/^`define ANDI 6'd23  $/;"	c
+AND_TAG	.\def.v	/^`define AND_TAG 3'b111$/;"	c
+AUIPC	.\def.v	/^`define AUIPC 6'd1$/;"	c
+AUIPC_OP	.\def.v	/^`define AUIPC_OP 7'b0010111$/;"	c
+BAUD_CLK_OVERSAMPLE_RATE	.\common\uart\uart_baud_clk.v	/^  parameter BAUD_CLK_OVERSAMPLE_RATE = 16$/;"	c
+BAUD_RATE	.\hci.v	/^  parameter BAUD_RATE = 115200$/;"	c
+BEQ	.\def.v	/^`define BEQ 6'd4$/;"	c
+BEQ_TAG	.\def.v	/^`define BEQ_TAG 3'b000$/;"	c
+BGE	.\def.v	/^`define BGE 6'd7$/;"	c
+BGEU	.\def.v	/^`define BGEU 6'd9$/;"	c
+BGEU_TAG	.\def.v	/^`define BGEU_TAG 3'b111$/;"	c
+BGE_TAG	.\def.v	/^`define BGE_TAG 3'b101$/;"	c
+BLT	.\def.v	/^`define BLT 6'd6$/;"	c
+BLTU	.\def.v	/^`define BLTU 6'd8$/;"	c
+BLTU_TAG	.\def.v	/^`define BLTU_TAG 3'b110$/;"	c
+BLT_TAG	.\def.v	/^`define BLT_TAG 3'b100$/;"	c
+BNE	.\def.v	/^`define BNE 6'd5    $/;"	c
+BNE_TAG	.\def.v	/^`define BNE_TAG 3'b001$/;"	c
+BRANCH_OP	.\def.v	/^`define BRANCH_OP 7'b1100011$/;"	c
+DATA_BITS	.\common\fifo\fifo.v	/^  parameter DATA_BITS = 8,$/;"	c
+DATA_BITS	.\common\uart\uart.v	/^  parameter DATA_BITS    = 8,$/;"	c
+DATA_BITS	.\common\uart\uart_rx.v	/^  parameter DATA_BITS                = 8,$/;"	c
+DATA_BITS	.\common\uart\uart_tx.v	/^  parameter DATA_BITS                = 8,$/;"	c
+DATA_WIDTH	.\def.v	/^`define DATA_WIDTH 31:0$/;"	c
+DISPATCH_STATUS_WIDTH	.\def.v	/^`define DISPATCH_STATUS_WIDTH 1:0$/;"	c
+FALSE	.\def.v	/^`define FALSE 1'b0$/;"	c
+IA_IMM_OP	.\def.v	/^`define IA_IMM_OP 7'b0010011$/;"	c
+IA_OP	.\def.v	/^`define IA_OP 7'b0110011$/;"	c
+IDLE_STATUS	.\def.v	/^`define IDLE_STATUS 2'b00$/;"	c
+INSTRUCTION_WIDTH	.\def.v	/^`define INSTRUCTION_WIDTH 31:0$/;"	c
+INST_OP_WIDTH	.\def.v	/^`define INST_OP_WIDTH 6:0$/;"	c
+INST_RD_WIDTH	.\def.v	/^`define INST_RD_WIDTH 11:7$/;"	c
+INST_RS_WIDTH	.\def.v	/^`define INST_RS_WIDTH 19:15$/;"	c
+INST_RT_WIDTH	.\def.v	/^`define INST_RT_WIDTH 24:20$/;"	c
+INST_SHAMT_WIDTH	.\def.v	/^`define INST_SHAMT_WIDTH 24:20$/;"	c
+JAL	.\def.v	/^`define JAL 6'd2$/;"	c
+JALR	.\def.v	/^`define JALR 6'd3$/;"	c
+JALR_OP	.\def.v	/^`define JALR_OP 7'b1100111$/;"	c
+JAL_OP	.\def.v	/^`define JAL_OP 7'b1101111$/;"	c
+LB	.\def.v	/^`define LB 6'd10$/;"	c
+LBU	.\def.v	/^`define LBU 6'd13$/;"	c
+LBU_TAG	.\def.v	/^`define LBU_TAG 3'b100$/;"	c
+LB_TAG	.\def.v	/^`define LB_TAG 3'b000$/;"	c
+LH	.\def.v	/^`define LH 6'd11$/;"	c
+LHU	.\def.v	/^`define LHU 6'd14$/;"	c
+LHU_TAG	.\def.v	/^`define LHU_TAG 3'b101$/;"	c
+LH_TAG	.\def.v	/^`define LH_TAG 3'b001$/;"	c
+LOAD_OP	.\def.v	/^`define LOAD_OP 7'b0000011$/;"	c
+LOAD_STATUS	.\def.v	/^`define LOAD_STATUS 2'b10$/;"	c
+LSB_SIZE	.\def.v	/^`define LSB_SIZE 15$/;"	c
+LSB_WIDTH	.\def.v	/^`define LSB_WIDTH 3:0$/;"	c
+LSbuffer	.\LSbuffer.v	/^module LSbuffer ($/;"	m
+LUI	.\def.v	/^`define LUI 6'd0$/;"	c
+LUI_OP	.\def.v	/^`define LUI_OP 7'b0110111$/;"	c
+LW	.\def.v	/^`define LW 6'd12$/;"	c
+LW_TAG	.\def.v	/^`define LW_TAG 3'b010$/;"	c
+MEM_SIZE	.\def.v	/^`define MEM_SIZE 256$/;"	c
+MEM_WIDTH	.\def.v	/^`define MEM_WIDTH 7:0$/;"	c
+NOP	.\def.v	/^`define NOP 6'd37$/;"	c
+OPERATOR_WIDTH	.\def.v	/^`define OPERATOR_WIDTH 5:0$/;"	c
+OR	.\def.v	/^`define OR 6'd35$/;"	c
+ORI	.\def.v	/^`define ORI 6'd22$/;"	c
+OR_TAG	.\def.v	/^`define OR_TAG 3'b110$/;"	c
+PARITY_MODE	.\common\uart\uart.v	/^  parameter PARITY_MODE  = 0  \/\/ 0 = none, 1 = odd, 2 = even$/;"	c
+PARITY_MODE	.\common\uart\uart_rx.v	/^  parameter PARITY_MODE              = 1, \/\/ 0 = NONE, 1 = ODD, 2 = EVEN$/;"	c
+PARITY_MODE	.\common\uart\uart_tx.v	/^  parameter PARITY_MODE              = 1, \/\/ 0 = NONE, 1 = ODD, 2 = EVEN$/;"	c
+PC_STATUS	.\def.v	/^`define PC_STATUS 2'b11/;"	c
+REG_SIZE	.\def.v	/^`define REG_SIZE 31$/;"	c
+REG_WIDTH	.\def.v	/^`define REG_WIDTH 4:0$/;"	c
+ROB_SIZE	.\def.v	/^`define ROB_SIZE 15$/;"	c
+ROB_WIDTH	.\def.v	/^`define ROB_WIDTH 3:0$/;"	c
+RS_SIZE	.\def.v	/^`define RS_SIZE 15$/;"	c
+RS_WIDTH	.\def.v	/^`define RS_WIDTH 3:0$/;"	c
+SB	.\def.v	/^`define SB 6'd15$/;"	c
+SB_TAG	.\def.v	/^`define SB_TAG 3'b000$/;"	c
+SH	.\def.v	/^`define SH 6'd16$/;"	c
+SH_TAG	.\def.v	/^`define SH_TAG 3'b001$/;"	c
+SIM	.\riscv_top.v	/^	parameter SIM = 0						\/\/ whether in simulation$/;"	c
+SLL	.\def.v	/^`define SLL 6'd29$/;"	c
+SLLI	.\def.v	/^`define SLLI 6'd24$/;"	c
+SLL_TAG	.\def.v	/^`define SLL_TAG 3'b001$/;"	c
+SLT	.\def.v	/^`define SLT 6'd30$/;"	c
+SLTI	.\def.v	/^`define SLTI 6'd19$/;"	c
+SLTIU	.\def.v	/^`define SLTIU 6'd20$/;"	c
+SLTU	.\def.v	/^`define SLTU 6'd31$/;"	c
+SLTU_TAG	.\def.v	/^`define SLTU_TAG 3'b011$/;"	c
+SLT_TAG	.\def.v	/^`define SLT_TAG 3'b010$/;"	c
+SRA	.\def.v	/^`define SRA 6'd34$/;"	c
+SRAI	.\def.v	/^`define SRAI 6'd26$/;"	c
+SRA_TAG	.\def.v	/^`define SRA_TAG 3'b101$/;"	c
+SRL	.\def.v	/^`define SRL 6'd33$/;"	c
+SRLI	.\def.v	/^`define SRLI 6'd25$/;"	c
+SRL_TAG	.\def.v	/^`define SRL_TAG 3'b101$/;"	c
+STORE_OP	.\def.v	/^`define STORE_OP 7'b0100011$/;"	c
+STORE_STATUS	.\def.v	/^`define STORE_STATUS 2'b01$/;"	c
+SUB	.\def.v	/^`define SUB 6'd28$/;"	c
+SUB_TAG	.\def.v	/^`define SUB_TAG 3'b000$/;"	c
+SW	.\def.v	/^`define SW 6'd17$/;"	c
+SW_TAG	.\def.v	/^`define SW_TAG 3'b010$/;"	c
+SYS_CLK_FREQ	.\common\uart\uart.v	/^  parameter SYS_CLK_FREQ = 50000000,$/;"	c
+SYS_CLK_FREQ	.\common\uart\uart_baud_clk.v	/^  parameter SYS_CLK_FREQ             = 50000000,$/;"	c
+SYS_CLK_FREQ	.\hci.v	/^  parameter SYS_CLK_FREQ = 100000000,$/;"	c
+TRUE	.\def.v	/^`define TRUE 1'b1$/;"	c
+XOR	.\def.v	/^`define XOR 6'd32$/;"	c
+XORI	.\def.v	/^`define XORI 6'd21$/;"	c
+XOR_TAG	.\def.v	/^`define XOR_TAG 3'b100$/;"	c
+ZERO_ADDR	.\def.v	/^`define ZERO_ADDR 32'b0$/;"	c
+ZERO_DATA	.\def.v	/^`define ZERO_DATA 32'b0$/;"	c
+ZERO_REG	.\def.v	/^`define ZERO_REG 8'b0$/;"	c
+ZERO_ROB	.\def.v	/^`define ZERO_ROB 8'b0$/;"	c
+addr_bits_wide_1	.\common\fifo\fifo.v	/^wire [ADDR_BITS-1:0] addr_bits_wide_1;$/;"	n
+alu	.\alu.v	/^module alu ($/;"	m
+baud_clk_tick	.\common\uart\uart.v	/^wire                 baud_clk_tick;$/;"	n
+clk	.\riscv_top.v	/^wire clk;$/;"	n
+cpu	.\cpu.v	/^module cpu($/;"	m
+cpu_dbgreg_dout	.\riscv_top.v	/^wire [31:0] cpu_dbgreg_dout;$/;"	n
+cpu_dbgreg_seg	.\hci.v	/^wire[7:0]    cpu_dbgreg_seg[3:0];$/;"	n
+cpu_ram_a	.\riscv_top.v	/^wire [31:0] cpu_ram_a;$/;"	n
+cpu_ram_din	.\riscv_top.v	/^wire [ 7:0] cpu_ram_din;$/;"	n
+cpu_ram_dout	.\riscv_top.v	/^wire [ 7:0] cpu_ram_dout;$/;"	n
+cpu_ram_wr	.\riscv_top.v	/^wire        cpu_ram_wr;$/;"	n
+cpu_rdy	.\riscv_top.v	/^wire		cpu_rdy;$/;"	n
+cpumc_a	.\riscv_top.v	/^wire [31:0]	cpumc_a;$/;"	n
+cpumc_din	.\riscv_top.v	/^wire [ 7:0]	cpumc_din;$/;"	n
+cpumc_wr	.\riscv_top.v	/^wire        cpumc_wr;$/;"	n
+d_addr	.\hci.v	/^reg [RAM_ADDR_WIDTH-1:0]    q_addr,             d_addr;$/;"	r
+d_baud_clk_tick_cnt	.\common\uart\uart_tx.v	/^reg [3:0]           q_baud_clk_tick_cnt, d_baud_clk_tick_cnt;$/;"	r
+d_cnt	.\common\uart\uart_baud_clk.v	/^wire [15:0] d_cnt;$/;"	n
+d_cpu_cycle_cnt	.\hci.v	/^wire [31:0] d_cpu_cycle_cnt;$/;"	n
+d_data	.\common\fifo\fifo.v	/^wire [DATA_BITS-1:0] d_data;$/;"	n
+d_data	.\common\uart\uart_rx.v	/^reg [DATA_BITS-1:0] q_data, d_data;$/;"	r
+d_data	.\common\uart\uart_tx.v	/^reg [DATA_BITS-1:0] q_data, d_data;$/;"	r
+d_data_bit_idx	.\common\uart\uart_rx.v	/^reg [2:0]           q_data_bit_idx, d_data_bit_idx;$/;"	r
+d_data_bit_idx	.\common\uart\uart_tx.v	/^reg [2:0]           q_data_bit_idx, d_data_bit_idx;$/;"	r
+d_decode_cnt	.\hci.v	/^reg [ 2:0]                  q_decode_cnt,       d_decode_cnt;$/;"	r
+d_done_tick	.\common\uart\uart_rx.v	/^reg                 q_done_tick, d_done_tick;$/;"	r
+d_empty	.\common\fifo\fifo.v	/^wire                 d_empty;$/;"	n
+d_err_code	.\hci.v	/^reg [ 1:0]                  q_err_code,         d_err_code;$/;"	r
+d_execute_cnt	.\hci.v	/^reg [16:0]                  q_execute_cnt,      d_execute_cnt;$/;"	r
+d_full	.\common\fifo\fifo.v	/^wire                 d_full;$/;"	n
+d_io_dout	.\hci.v	/^reg  [ 7:0] q_io_dout, d_io_dout;$/;"	r
+d_io_in_wr_data	.\hci.v	/^reg  [ 7:0] q_io_in_wr_data, d_io_in_wr_data;$/;"	r
+d_io_in_wr_en	.\hci.v	/^reg         q_io_in_wr_en, d_io_in_wr_en;$/;"	r
+d_oversample_tick_cnt	.\common\uart\uart_rx.v	/^reg [3:0]           q_oversample_tick_cnt, d_oversample_tick_cnt;$/;"	r
+d_parity_bit	.\common\uart\uart_tx.v	/^reg                 q_parity_bit, d_parity_bit;$/;"	r
+d_parity_err	.\common\uart\uart_rx.v	/^reg                 q_parity_err, d_parity_err;$/;"	r
+d_program_finish	.\hci.v	/^reg d_program_finish;$/;"	r
+d_rd_ptr	.\common\fifo\fifo.v	/^wire [ADDR_BITS-1:0] d_rd_ptr;$/;"	n
+d_rx_parity_err	.\common\uart\uart.v	/^wire d_rx_parity_err;$/;"	n
+d_state	.\common\uart\uart_rx.v	/^reg [4:0]           q_state, d_state;$/;"	r
+d_state	.\common\uart\uart_tx.v	/^reg [4:0]           q_state, d_state;$/;"	r
+d_state	.\hci.v	/^reg [ 4:0]                  q_state,            d_state;$/;"	r
+d_tx	.\common\uart\uart_tx.v	/^reg                 q_tx, d_tx;$/;"	r
+d_tx_data	.\hci.v	/^reg  [7:0] q_tx_data, d_tx_data;$/;"	r
+d_tx_done_tick	.\common\uart\uart_tx.v	/^reg                 q_tx_done_tick, d_tx_done_tick;$/;"	r
+d_wr_en	.\hci.v	/^reg        q_wr_en,   d_wr_en;$/;"	r
+d_wr_ptr	.\common\fifo\fifo.v	/^wire [ADDR_BITS-1:0] d_wr_ptr;$/;"	n
+decoder	.\decoder.v	/^module decoder ($/;"	m
+dispatcher	.\dispatcher.v	/^module dispatcher ($/;"	m
+dual_port_ram_sync	.\common\block_ram\block_ram.v	/^module dual_port_ram_sync$/;"	m
+fetcher	.\fetcher.v	/^module fetcher ($/;"	m
+fifo	.\common\fifo\fifo.v	/^module fifo$/;"	m
+hci	.\hci.v	/^module hci$/;"	m
+hci_active	.\riscv_top.v	/^wire hci_active;$/;"	n
+hci_active_out	.\riscv_top.v	/^wire 						hci_active_out;$/;"	n
+hci_io_din	.\riscv_top.v	/^wire [ 7:0]					hci_io_din;$/;"	n
+hci_io_dout	.\riscv_top.v	/^wire [ 7:0]					hci_io_dout;$/;"	n
+hci_io_en	.\riscv_top.v	/^wire 						hci_io_en;$/;"	n
+hci_io_full	.\riscv_top.v	/^wire 						hci_io_full;$/;"	n
+hci_io_sel	.\riscv_top.v	/^wire [ 2:0]					hci_io_sel;$/;"	n
+hci_io_wr	.\riscv_top.v	/^wire 						hci_io_wr;$/;"	n
+hci_ram_a	.\riscv_top.v	/^wire [RAM_ADDR_WIDTH-1:0] 	hci_ram_a;$/;"	n
+hci_ram_din	.\riscv_top.v	/^wire [ 7:0] 				hci_ram_din;$/;"	n
+hci_ram_dout	.\riscv_top.v	/^wire [ 7:0] 				hci_ram_dout;$/;"	n
+hci_ram_wr	.\riscv_top.v	/^wire        				hci_ram_wr;$/;"	n
+i	.\common\block_ram\block_ram.v	/^integer i;$/;"	r
+input	.\common\uart\uart.v	/^  input  wire                 reset,      \/\/ Reset signal$/;"	c
+input	.\common\uart\uart_baud_clk.v	/^  input  wire reset,$/;"	c
+input	.\hci.v	/^  input   wire                        rst,              \/\/ reset signal$/;"	c
+input	.\ram.v	/^  input  wire                   en_in,    \/\/ chip enable$/;"	c
+input	.\riscv_top.v	/^	input wire			btnC,$/;"	c
+io_in_empty	.\hci.v	/^wire        io_in_empty;$/;"	n
+io_in_full	.\hci.v	/^wire        io_in_full;$/;"	n
+io_in_rd_data	.\hci.v	/^wire [ 7:0] io_in_rd_data;$/;"	n
+io_in_rd_en	.\hci.v	/^reg         io_in_rd_en;$/;"	r
+load_request_addr	.\dispatcher.v	/^    reg [`ADDRESS_WIDTH] load_request_addr;$/;"	r
+load_requesting	.\dispatcher.v	/^    reg load_requesting;    $/;"	r
+parameter	.\common\block_ram\block_ram.v	/^  parameter DATA_WIDTH = 8$/;"	c
+parameter	.\common\fifo\fifo.v	/^  parameter ADDR_BITS = 3$/;"	c
+parameter	.\common\uart\uart.v	/^  parameter BAUD_RATE    = 19200,$/;"	c
+parameter	.\common\uart\uart.v	/^  parameter STOP_BITS    = 1,$/;"	c
+parameter	.\common\uart\uart_baud_clk.v	/^  parameter BAUD                     = 19200,$/;"	c
+parameter	.\common\uart\uart_rx.v	/^  parameter BAUD_CLK_OVERSAMPLE_RATE = 16$/;"	c
+parameter	.\common\uart\uart_rx.v	/^  parameter STOP_BITS                = 1,$/;"	c
+parameter	.\common\uart\uart_tx.v	/^  parameter BAUD_CLK_OVERSAMPLE_RATE = 16$/;"	c
+parameter	.\common\uart\uart_tx.v	/^  parameter STOP_BITS                = 1,$/;"	c
+parameter	.\hci.v	/^  parameter RAM_ADDR_WIDTH = 17,$/;"	c
+parity_err	.\hci.v	/^wire       parity_err;$/;"	n
+pc	.\pc.v	/^module pc ($/;"	m
+pc_request_addr	.\dispatcher.v	/^    reg [`ADDRESS_WIDTH] pc_request_addr;$/;"	r
+pc_requesting	.\dispatcher.v	/^    reg pc_requesting;$/;"	r
+program_finish	.\riscv_top.v	/^wire						program_finish;$/;"	n
+q_addr	.\hci.v	/^reg [RAM_ADDR_WIDTH-1:0]    q_addr,             d_addr;$/;"	r
+q_addr_a	.\common\block_ram\block_ram.v	/^reg [ADDR_WIDTH-1:0] q_addr_a;$/;"	r
+q_addr_b	.\common\block_ram\block_ram.v	/^reg [ADDR_WIDTH-1:0] q_addr_b;$/;"	r
+q_baud_clk_tick_cnt	.\common\uart\uart_tx.v	/^reg [3:0]           q_baud_clk_tick_cnt, d_baud_clk_tick_cnt;$/;"	r
+q_cnt	.\common\uart\uart_baud_clk.v	/^reg  [15:0] q_cnt;$/;"	r
+q_cpu_cycle_cnt	.\hci.v	/^reg  [31:0] q_cpu_cycle_cnt;$/;"	r
+q_data	.\common\uart\uart_rx.v	/^reg [DATA_BITS-1:0] q_data, d_data;$/;"	r
+q_data	.\common\uart\uart_tx.v	/^reg [DATA_BITS-1:0] q_data, d_data;$/;"	r
+q_data_array	.\common\fifo\fifo.v	/^reg  [DATA_BITS-1:0] q_data_array [2**ADDR_BITS-1:0];$/;"	r
+q_data_bit_idx	.\common\uart\uart_rx.v	/^reg [2:0]           q_data_bit_idx, d_data_bit_idx;$/;"	r
+q_data_bit_idx	.\common\uart\uart_tx.v	/^reg [2:0]           q_data_bit_idx, d_data_bit_idx;$/;"	r
+q_decode_cnt	.\hci.v	/^reg [ 2:0]                  q_decode_cnt,       d_decode_cnt;$/;"	r
+q_done_tick	.\common\uart\uart_rx.v	/^reg                 q_done_tick, d_done_tick;$/;"	r
+q_empty	.\common\fifo\fifo.v	/^reg                  q_empty;$/;"	r
+q_err_code	.\hci.v	/^reg [ 1:0]                  q_err_code,         d_err_code;$/;"	r
+q_execute_cnt	.\hci.v	/^reg [16:0]                  q_execute_cnt,      d_execute_cnt;$/;"	r
+q_full	.\common\fifo\fifo.v	/^reg                  q_full;$/;"	r
+q_hci_io_en	.\riscv_top.v	/^reg                         q_hci_io_en;$/;"	r
+q_io_dout	.\hci.v	/^reg  [ 7:0] q_io_dout, d_io_dout;$/;"	r
+q_io_en	.\hci.v	/^reg         q_io_en;$/;"	r
+q_io_in_wr_data	.\hci.v	/^reg  [ 7:0] q_io_in_wr_data, d_io_in_wr_data;$/;"	r
+q_io_in_wr_en	.\hci.v	/^reg         q_io_in_wr_en, d_io_in_wr_en;$/;"	r
+q_oversample_tick_cnt	.\common\uart\uart_rx.v	/^reg [3:0]           q_oversample_tick_cnt, d_oversample_tick_cnt;$/;"	r
+q_parity_bit	.\common\uart\uart_tx.v	/^reg                 q_parity_bit, d_parity_bit;$/;"	r
+q_parity_err	.\common\uart\uart_rx.v	/^reg                 q_parity_err, d_parity_err;$/;"	r
+q_rd_ptr	.\common\fifo\fifo.v	/^reg  [ADDR_BITS-1:0] q_rd_ptr;$/;"	r
+q_rx	.\common\uart\uart_rx.v	/^reg                 q_rx;$/;"	r
+q_rx_parity_err	.\common\uart\uart.v	/^reg  q_rx_parity_err;$/;"	r
+q_state	.\common\uart\uart_rx.v	/^reg [4:0]           q_state, d_state;$/;"	r
+q_state	.\common\uart\uart_tx.v	/^reg [4:0]           q_state, d_state;$/;"	r
+q_state	.\hci.v	/^reg [ 4:0]                  q_state,            d_state;$/;"	r
+q_tx	.\common\uart\uart_tx.v	/^reg                 q_tx, d_tx;$/;"	r
+q_tx_data	.\hci.v	/^reg  [7:0] q_tx_data, d_tx_data;$/;"	r
+q_tx_done_tick	.\common\uart\uart_tx.v	/^reg                 q_tx_done_tick, d_tx_done_tick;$/;"	r
+q_wr_en	.\hci.v	/^reg        q_wr_en,   d_wr_en;$/;"	r
+q_wr_ptr	.\common\fifo\fifo.v	/^reg  [ADDR_BITS-1:0] q_wr_ptr;$/;"	r
+ram	.\common\block_ram\block_ram.v	/^reg [DATA_WIDTH-1:0] ram [2**ADDR_WIDTH-1:0];$/;"	r
+ram	.\ram.v	/^module ram$/;"	m
+ram_a	.\riscv_top.v	/^wire [RAM_ADDR_WIDTH-1:0]	ram_a;$/;"	n
+ram_bram_dout	.\ram.v	/^wire [7:0] ram_bram_dout;$/;"	n
+ram_bram_we	.\ram.v	/^wire       ram_bram_we;$/;"	n
+ram_dout	.\riscv_top.v	/^wire [ 7:0]					ram_dout;$/;"	n
+ram_en	.\riscv_top.v	/^wire 						ram_en;$/;"	n
+rd_data	.\hci.v	/^wire [7:0] rd_data;$/;"	n
+rd_en	.\hci.v	/^reg        rd_en;$/;"	r
+rd_en_prot	.\common\fifo\fifo.v	/^wire rd_en_prot;$/;"	n
+reg	.\LSbuffer.v	/^    output reg      [`ADDRESS_WIDTH] out_dispatch_addr,$/;"	p
+reg	.\LSbuffer.v	/^    output reg      [`ADDRESS_WIDTH] out_rob_load_addr,$/;"	p
+reg	.\LSbuffer.v	/^    output reg      [`DATA_WIDTH] out_rob_value,$/;"	p
+reg	.\LSbuffer.v	/^    output reg      [`ROB_WIDTH] out_rob_reorder,$/;"	p
+reg	.\alu.v	/^    output reg      [`DATA_WIDTH] out_rob_result$/;"	p
+reg	.\alu.v	/^    output reg      [`ROB_WIDTH] out_rob_reorder,$/;"	p
+reg	.\decoder.v	/^    output reg      [`ADDRESS_WIDTH] out_rob_dest,$/;"	p
+reg	.\decoder.v	/^    output reg      [`DATA_WIDTH] out_lsb_Vj,$/;"	p
+reg	.\decoder.v	/^    output reg      [`DATA_WIDTH] out_lsb_imm,$/;"	p
+reg	.\decoder.v	/^    output reg      [`DATA_WIDTH] out_rs_Vj,$/;"	p
+reg	.\decoder.v	/^    output reg      [`DATA_WIDTH] out_rs_Vk,$/;"	p
+reg	.\decoder.v	/^    output reg      [`LSB_WIDTH] out_lsb_assign_num,$/;"	p
+reg	.\decoder.v	/^    output reg      [`OPERATOR_WIDTH] out_lsb_type,$/;"	p
+reg	.\decoder.v	/^    output reg      [`OPERATOR_WIDTH] out_rob_type,$/;"	p
+reg	.\decoder.v	/^    output reg      [`OPERATOR_WIDTH] out_rs_type,$/;"	p
+reg	.\decoder.v	/^    output reg      [`REG_WIDTH] out_reg_rd_addr,$/;"	p
+reg	.\decoder.v	/^    output reg      [`REG_WIDTH] out_reg_rs_addr,$/;"	p
+reg	.\decoder.v	/^    output reg      [`REG_WIDTH] out_reg_rt_addr,$/;"	p
+reg	.\decoder.v	/^    output reg      [`ROB_WIDTH] out_lsb_Qj,$/;"	p
+reg	.\decoder.v	/^    output reg      [`ROB_WIDTH] out_rob_assign_reorder,$/;"	p
+reg	.\decoder.v	/^    output reg      [`ROB_WIDTH] out_rob_rs_reorder,$/;"	p
+reg	.\decoder.v	/^    output reg      [`ROB_WIDTH] out_rob_rt_reorder,$/;"	p
+reg	.\decoder.v	/^    output reg      [`ROB_WIDTH] out_rs_Qj,    $/;"	p
+reg	.\decoder.v	/^    output reg      [`ROB_WIDTH] out_rs_Qk,$/;"	p
+reg	.\decoder.v	/^    output reg      [`ROB_WIDTH] out_rs_reorder,$/;"	p
+reg	.\decoder.v	/^    output reg      [`RS_WIDTH] out_rs_assign_num,$/;"	p
+reg	.\dispatcher.v	/^    output reg      [`ADDRESS_WIDTH] out_mem_addr,$/;"	p
+reg	.\dispatcher.v	/^    output reg      [`DATA_WIDTH] out_fetcher_inst,$/;"	p
+reg	.\dispatcher.v	/^    output reg      [`DATA_WIDTH] out_lsb_data,$/;"	p
+reg	.\dispatcher.v	/^    output reg      [`MEM_WIDTH] out_mem_data,$/;"	p
+reg	.\dispatcher.v	/^    output reg      load_busy,$/;"	p
+reg	.\dispatcher.v	/^    output reg      pc_busy$/;"	p
+reg	.\dispatcher.v	/^    output reg      store_busy,$/;"	p
+reg	.\fetcher.v	/^    output reg      [`ADDRESS_WIDTH] out_dispatch_pc_addr,$/;"	p
+reg	.\fetcher.v	/^    output reg      [`INSTRUCTION_WIDTH] out_decoder_inst,$/;"	p
+reg	.\hci.v	/^  output  reg                         program_finish,   \/\/ program finish signal$/;"	p
+reg	.\hci.v	/^  output  reg                         ram_wr,           \/\/ memory write enable signal$/;"	p
+reg	.\pc.v	/^    output reg      [`ADDRESS_WIDTH] out_fetcher_next_pc$/;"	p
+reg	.\register.v	/^    output reg      [`DATA_WIDTH] out_decoder_rs_data,$/;"	p
+reg	.\register.v	/^    output reg      [`DATA_WIDTH] out_decoder_rt_data,$/;"	p
+reg	.\register.v	/^    output reg      [`ROB_WIDTH] out_decoder_rs_reorder,$/;"	p
+reg	.\register.v	/^    output reg      [`ROB_WIDTH] out_decoder_rt_reorder,$/;"	p
+reg	.\register.v	/^    output reg      out_decoder_rs_busy,$/;"	p
+reg	.\register.v	/^    output reg      out_decoder_rt_busy,$/;"	p
+reg	.\rob.v	/^    output reg      [`ADDRESS_WIDTH] out_dispatch_addr,$/;"	p
+reg	.\rob.v	/^    output reg      [`ADDRESS_WIDTH] out_pc_jump_addr,$/;"	p
+reg	.\rob.v	/^    output reg      [`DATA_WIDTH] in_rob_rs_value,$/;"	p
+reg	.\rob.v	/^    output reg      [`DATA_WIDTH] in_rob_rt_value,$/;"	p
+reg	.\rob.v	/^    output reg      [`DATA_WIDTH] out_dispatch_value,$/;"	p
+reg	.\rob.v	/^    output reg      [`DATA_WIDTH] out_lsb_value,$/;"	p
+reg	.\rob.v	/^    output reg      [`DATA_WIDTH] out_reg_rd_value,$/;"	p
+reg	.\rob.v	/^    output reg      [`DATA_WIDTH] out_rs_value,$/;"	p
+reg	.\rob.v	/^    output reg      [`REG_WIDTH] out_reg_rd_addr,$/;"	p
+reg	.\rob.v	/^    output reg      [`ROB_WIDTH] out_lsb_reorder,$/;"	p
+reg	.\rob.v	/^    output reg      [`ROB_WIDTH] out_reg_reorder,$/;"	p
+reg	.\rob.v	/^    output reg      [`ROB_WIDTH] out_rs_reorder,$/;"	p
+reg	.\rob.v	/^    output reg      in_rob_rs_ready,$/;"	p
+reg	.\rob.v	/^    output reg      in_rob_rt_ready,$/;"	p
+reg	.\rob.v	/^    output reg      out_fetcher_jump_sign,$/;"	p
+reg	.\rob.v	/^    output reg      out_lsb_flush,$/;"	p
+reg	.\rob.v	/^    output reg      out_lsb_load_executable,$/;"	p
+reg	.\rob.v	/^    output reg      out_rs_flush,$/;"	p
+reg	.\rs.v	/^    output reg      [`DATA_WIDTH] out_alu_Vj,$/;"	p
+reg	.\rs.v	/^    output reg      [`DATA_WIDTH] out_alu_Vk,$/;"	p
+reg	.\rs.v	/^    output reg      [`OPERATOR_WIDTH] out_alu_type,$/;"	p
+reg	.\rs.v	/^    output reg      [`ROB_WIDTH] out_alu_dest,$/;"	p
+register	.\register.v	/^module register ($/;"	m
+riscv_top	.\riscv_top.v	/^module riscv_top$/;"	m
+rob	.\rob.v	/^module rob ($/;"	m
+rs	.\rs.v	/^module rs ($/;"	m
+rst	.\riscv_top.v	/^reg rst;$/;"	r
+rst_delay	.\riscv_top.v	/^reg rst_delay;$/;"	r
+rx_done_tick	.\common\uart\uart.v	/^wire                 rx_done_tick;$/;"	n
+rx_empty	.\hci.v	/^wire       rx_empty;$/;"	n
+rx_fifo_wr_data	.\common\uart\uart.v	/^wire [DATA_BITS-1:0] rx_fifo_wr_data;$/;"	n
+rx_parity_err	.\common\uart\uart.v	/^wire                 rx_parity_err;$/;"	n
+single_port_ram_sync	.\common\block_ram\block_ram.v	/^module single_port_ram_sync$/;"	m
+status	.\dispatcher.v	/^    reg [`DISPATCH_STATUS_WIDTH] status;$/;"	r
+store_request_addr	.\dispatcher.v	/^    reg [`ADDRESS_WIDTH] store_request_addr;$/;"	r
+store_request_data	.\dispatcher.v	/^    reg [`DATA_WIDTH] store_request_data;$/;"	r
+store_requesting	.\dispatcher.v	/^    reg store_requesting;$/;"	r
+tx_done_tick	.\common\uart\uart.v	/^wire                 tx_done_tick;$/;"	n
+tx_fifo_empty	.\common\uart\uart.v	/^wire                 tx_fifo_empty;$/;"	n
+tx_fifo_rd_data	.\common\uart\uart.v	/^wire [DATA_BITS-1:0] tx_fifo_rd_data;$/;"	n
+tx_full	.\hci.v	/^wire       tx_full;$/;"	n
+uart	.\common\uart\uart.v	/^module uart$/;"	m
+uart_baud_clk	.\common\uart\uart_baud_clk.v	/^module uart_baud_clk$/;"	m
+uart_rx	.\common\uart\uart_rx.v	/^module uart_rx$/;"	m
+uart_tx	.\common\uart\uart_tx.v	/^module uart_tx$/;"	m
+wire	.\LSbuffer.v	/^    input  wire     [`DATA_WIDTH] in_decoder_Vj,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     [`DATA_WIDTH] in_decoder_assign_num,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     [`DATA_WIDTH] in_decoder_imm,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     [`DATA_WIDTH] in_rob_value,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     [`DATA_WIDTH] out_dispatch_data,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     [`OPERATOR_WIDTH] in_decoder_type,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     [`ROB_WIDTH] in_decoder_Qj,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     [`ROB_WIDTH] in_rob_reorder,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     in_clk,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     in_rob_flush,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     in_rob_load_executable,$/;"	p
+wire	.\LSbuffer.v	/^    input  wire     in_rst,$/;"	p
+wire	.\LSbuffer.v	/^    output wire     out_capacity_full$/;"	p
+wire	.\alu.v	/^    input  wire     [`DATA_WIDTH] in_rs_Vj,$/;"	p
+wire	.\alu.v	/^    input  wire     [`DATA_WIDTH] in_rs_Vk,$/;"	p
+wire	.\alu.v	/^    input  wire     [`OPERATOR_WIDTH] in_rs_type,$/;"	p
+wire	.\alu.v	/^    input  wire     [`ROB_WIDTH] in_rs_reorder,$/;"	p
+wire	.\alu.v	/^    input  wire     in_clk,$/;"	p
+wire	.\alu.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\alu.v	/^    input  wire     in_rst,$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  input  wire                  clk,$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  input  wire                  we,$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  input  wire [ADDR_WIDTH-1:0] addr_a,$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  input  wire [ADDR_WIDTH-1:0] addr_b,$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  input  wire [DATA_WIDTH-1:0] din_a,$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  output wire [DATA_WIDTH-1:0] dout_a$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  output wire [DATA_WIDTH-1:0] dout_a,$/;"	p
+wire	.\common\block_ram\block_ram.v	/^  output wire [DATA_WIDTH-1:0] dout_b$/;"	p
+wire	.\common\fifo\fifo.v	/^  input  wire                 clk,      \/\/ 50MHz system clock$/;"	p
+wire	.\common\fifo\fifo.v	/^  input  wire                 rd_en,    \/\/ Read enable, pop front of queue$/;"	p
+wire	.\common\fifo\fifo.v	/^  input  wire                 reset,    \/\/ Reset signal$/;"	p
+wire	.\common\fifo\fifo.v	/^  input  wire                 wr_en,    \/\/ Write enable, add wr_data to end of queue$/;"	p
+wire	.\common\fifo\fifo.v	/^  input  wire [DATA_BITS-1:0] wr_data,  \/\/ Data to be written on wr_en$/;"	p
+wire	.\common\fifo\fifo.v	/^  output wire                 empty     \/\/ FIFO is empty (reads invalid)$/;"	p
+wire	.\common\fifo\fifo.v	/^  output wire                 full,     \/\/ FIFO is full (writes invalid)$/;"	p
+wire	.\common\fifo\fifo.v	/^  output wire [DATA_BITS-1:0] rd_data,  \/\/ Current front of fifo data$/;"	p
+wire	.\common\uart\uart.v	/^  input  wire                 rd_en,      \/\/ Pops current read FIFO front off the queue$/;"	p
+wire	.\common\uart\uart.v	/^  input  wire                 rx,         \/\/ RS-232 rx pin$/;"	p
+wire	.\common\uart\uart.v	/^  input  wire                 wr_en,      \/\/ Write tx_data over serial connection$/;"	p
+wire	.\common\uart\uart.v	/^  input  wire [DATA_BITS-1:0] tx_data,    \/\/ Data to be transmitted when wr_en is 1$/;"	p
+wire	.\common\uart\uart.v	/^  output wire                 parity_err  \/\/ 1 if a parity error has been detected$/;"	p
+wire	.\common\uart\uart.v	/^  output wire                 rx_empty,   \/\/ 1 if there is no more read data available$/;"	p
+wire	.\common\uart\uart.v	/^  output wire                 tx,         \/\/ RS-232 tx pin$/;"	p
+wire	.\common\uart\uart.v	/^  output wire                 tx_full,    \/\/ 1 if the transmit FIFO cannot accept more requests$/;"	p
+wire	.\common\uart\uart.v	/^  output wire [DATA_BITS-1:0] rx_data,    \/\/ Data currently at front of read FIFO$/;"	p
+wire	.\common\uart\uart_baud_clk.v	/^  output wire baud_clk_tick$/;"	p
+wire	.\common\uart\uart_rx.v	/^  input  wire                 baud_clk_tick,  \/\/ 1 tick per OVERSAMPLE_RATE baud clks$/;"	p
+wire	.\common\uart\uart_rx.v	/^  input  wire                 clk,            \/\/ System clock$/;"	p
+wire	.\common\uart\uart_rx.v	/^  input  wire                 reset,          \/\/ Reset signal$/;"	p
+wire	.\common\uart\uart_rx.v	/^  input  wire                 rx,             \/\/ RX transmission wire$/;"	p
+wire	.\common\uart\uart_rx.v	/^  output wire                 parity_err      \/\/ Asserted for one clk on parity error$/;"	p
+wire	.\common\uart\uart_rx.v	/^  output wire                 rx_done_tick,   \/\/ Output rdy signal$/;"	p
+wire	.\common\uart\uart_rx.v	/^  output wire [DATA_BITS-1:0] rx_data,        \/\/ Output data$/;"	p
+wire	.\common\uart\uart_tx.v	/^  input  wire                 baud_clk_tick,  \/\/ 1 tick per OVERSAMPLE_RATE baud clks$/;"	p
+wire	.\common\uart\uart_tx.v	/^  input  wire                 clk,            \/\/ System clock$/;"	p
+wire	.\common\uart\uart_tx.v	/^  input  wire                 reset,          \/\/ Reset signal$/;"	p
+wire	.\common\uart\uart_tx.v	/^  input  wire                 tx_start,       \/\/ Signal requesting trasmission start$/;"	p
+wire	.\common\uart\uart_tx.v	/^  input  wire [DATA_BITS-1:0] tx_data,        \/\/ Data to be transmitted$/;"	p
+wire	.\common\uart\uart_tx.v	/^  output wire                 tx              \/\/ TX transmission wire$/;"	p
+wire	.\common\uart\uart_tx.v	/^  output wire                 tx_done_tick,   \/\/ Transfer done signal$/;"	p
+wire	.\cpu.v	/^	input  wire					        rdy_in,			\/\/ ready signal, pause cpu when low$/;"	p
+wire	.\cpu.v	/^	input  wire                 io_buffer_full, \/\/ 1 if uart buffer is full$/;"	p
+wire	.\cpu.v	/^	output wire [31:0]			dbgreg_dout		\/\/ cpu register output (debugging demo)$/;"	p
+wire	.\cpu.v	/^  input  wire                 clk_in,			\/\/ system clock signal$/;"	p
+wire	.\cpu.v	/^  input  wire                 rst_in,			\/\/ reset signal$/;"	p
+wire	.\cpu.v	/^  input  wire [ 7:0]          mem_din,		\/\/ data input bus$/;"	p
+wire	.\cpu.v	/^  output wire                 mem_wr,			\/\/ write\/read signal (1 for write)$/;"	p
+wire	.\cpu.v	/^  output wire [ 7:0]          mem_dout,		\/\/ data output bus$/;"	p
+wire	.\cpu.v	/^  output wire [31:0]          mem_a,			\/\/ address bus (only 17:0 is used)$/;"	p
+wire	.\decoder.v	/^    input  wire     [`DATA_WIDTH] in_reg_rs_data,$/;"	p
+wire	.\decoder.v	/^    input  wire     [`DATA_WIDTH] in_reg_rt_data,$/;"	p
+wire	.\decoder.v	/^    input  wire     [`DATA_WIDTH] in_rob_rs_value,$/;"	p
+wire	.\decoder.v	/^    input  wire     [`DATA_WIDTH] in_rob_rt_value,$/;"	p
+wire	.\decoder.v	/^    input  wire     [`INSTRUCTION_WIDTH] in_fetcher_inst,$/;"	p
+wire	.\decoder.v	/^    input  wire     [`ROB_WIDTH] in_reg_rs_reorder,$/;"	p
+wire	.\decoder.v	/^    input  wire     [`ROB_WIDTH] in_reg_rt_reorder$/;"	p
+wire	.\decoder.v	/^    input  wire     in_clk,$/;"	p
+wire	.\decoder.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\decoder.v	/^    input  wire     in_reg_rs_busy,$/;"	p
+wire	.\decoder.v	/^    input  wire     in_reg_rt_busy,$/;"	p
+wire	.\decoder.v	/^    input  wire     in_rob_rs_ready,$/;"	p
+wire	.\decoder.v	/^    input  wire     in_rob_rt_ready,$/;"	p
+wire	.\decoder.v	/^    input  wire     in_rst,$/;"	p
+wire	.\decoder.v	/^    input  wire     in_stall,$/;"	p
+wire	.\dispatcher.v	/^    input  wire     [`ADDRESS_WIDTH] in_fetcher_addr,$/;"	p
+wire	.\dispatcher.v	/^    input  wire     [`ADDRESS_WIDTH] in_lsb_addr,$/;"	p
+wire	.\dispatcher.v	/^    input  wire     [`ADDRESS_WIDTH] in_rob_addr,    $/;"	p
+wire	.\dispatcher.v	/^    input  wire     [`DATA_WIDTH] in_rob_value,$/;"	p
+wire	.\dispatcher.v	/^    input  wire     [`MEM_WIDTH] in_mem_data,$/;"	p
+wire	.\dispatcher.v	/^    input  wire     in_clk,$/;"	p
+wire	.\dispatcher.v	/^    input  wire     in_io_buffer_full,$/;"	p
+wire	.\dispatcher.v	/^    input  wire     in_rdy, $/;"	p
+wire	.\dispatcher.v	/^    input  wire     in_rst,$/;"	p
+wire	.\dispatcher.v	/^    output wire     out_mem_wr_signal,$/;"	p
+wire	.\fetcher.v	/^    input  wire     [`ADDRESS_WIDTH] in_pc_addr,    $/;"	p
+wire	.\fetcher.v	/^    input  wire     [`DATA_WIDTH] in_dispatch_pc_inst$/;"	p
+wire	.\fetcher.v	/^    input  wire     in_clk,$/;"	p
+wire	.\fetcher.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\fetcher.v	/^    input  wire     in_rst,$/;"	p
+wire	.\fetcher.v	/^    input  wire     in_stall,$/;"	p
+wire	.\hci.v	/^  input   wire                        io_en,            \/\/ I\/O enable signal$/;"	p
+wire	.\hci.v	/^  input   wire                        io_wr,            \/\/ I\/O write\/read select$/;"	p
+wire	.\hci.v	/^  input   wire                        rx,               \/\/ rs-232 rx signal$/;"	p
+wire	.\hci.v	/^  input   wire  [ 2:0]                io_sel,           \/\/ I\/O port select$/;"	p
+wire	.\hci.v	/^  input   wire  [ 7:0]                io_din,           \/\/ I\/O data input bus$/;"	p
+wire	.\hci.v	/^  input   wire  [ 7:0]                ram_din,          \/\/ memory data bus [input]$/;"	p
+wire	.\hci.v	/^  input   wire  [31:0]                cpu_dbgreg_din    \/\/ cpu debug register read bus$/;"	p
+wire	.\hci.v	/^  output  wire                        active,           \/\/ dbg block is active (disable CPU)$/;"	p
+wire	.\hci.v	/^  output  wire                        io_full,          \/\/ I\/O buffer full signal $/;"	p
+wire	.\hci.v	/^  output  wire                        tx,               \/\/ rs-232 tx signal$/;"	p
+wire	.\hci.v	/^  output  wire  [ 7:0]                io_dout,          \/\/ I\/O data output bus$/;"	p
+wire	.\hci.v	/^  output  wire  [ 7:0]                ram_dout,         \/\/ memory data bus [output]$/;"	p
+wire	.\hci.v	/^  output  wire  [RAM_ADDR_WIDTH-1:0]  ram_a,            \/\/ memory address$/;"	p
+wire	.\pc.v	/^    input  wire     [`ADDRESS_WIDTH] in_fetcher_last_pc,$/;"	p
+wire	.\pc.v	/^    input  wire     [`ADDRESS_WIDTH] in_rob_jump_addr,$/;"	p
+wire	.\pc.v	/^    input  wire     in_clk,$/;"	p
+wire	.\pc.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\pc.v	/^    input  wire     in_rob_jump_sign,$/;"	p
+wire	.\pc.v	/^    input  wire     in_rst, $/;"	p
+wire	.\pc.v	/^    input  wire     in_stall,$/;"	p
+wire	.\ram.v	/^  input  wire                   r_nw_in,  \/\/ read\/write select (read: 1, write: 0)$/;"	p
+wire	.\ram.v	/^  input  wire  [ 7:0]           d_in,     \/\/ data input$/;"	p
+wire	.\ram.v	/^  input  wire  [ADDR_WIDTH-1:0] a_in,     \/\/ memory address$/;"	p
+wire	.\ram.v	/^  output wire  [ 7:0]           d_out     \/\/ data output$/;"	p
+wire	.\register.v	/^    input  wire     [`DATA_WIDTH] in_rob_rd_value,$/;"	p
+wire	.\register.v	/^    input  wire     [`REG_WIDTH] in_decoder_rd_addr,$/;"	p
+wire	.\register.v	/^    input  wire     [`REG_WIDTH] in_decoder_rs_addr,$/;"	p
+wire	.\register.v	/^    input  wire     [`REG_WIDTH] in_decoder_rt_addr,$/;"	p
+wire	.\register.v	/^    input  wire     [`REG_WIDTH] in_rob_rd_addr,$/;"	p
+wire	.\register.v	/^    input  wire     [`ROB_WIDTH] in_rob_reorder$/;"	p
+wire	.\register.v	/^    input  wire     in_clk,$/;"	p
+wire	.\register.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\register.v	/^    input  wire     in_rst,$/;"	p
+wire	.\riscv_top.v	/^	input wire 			Rx,$/;"	p
+wire	.\riscv_top.v	/^	output wire			led$/;"	p
+wire	.\riscv_top.v	/^	output wire 		Tx,$/;"	p
+wire	.\rob.v	/^    input  wire     [`ADDRESS_WIDTH] in_lsb_load_addr,$/;"	p
+wire	.\rob.v	/^    input  wire     [`ADDRESS_WIDTH] in_rob_dest,$/;"	p
+wire	.\rob.v	/^    input  wire     [`DATA_WIDTH] in_alu_result,$/;"	p
+wire	.\rob.v	/^    input  wire     [`DATA_WIDTH] in_lsb_value,$/;"	p
+wire	.\rob.v	/^    input  wire     [`OPERATOR_WIDTH] in_rob_type,$/;"	p
+wire	.\rob.v	/^    input  wire     [`ROB_WIDTH] in_alu_reorder,$/;"	p
+wire	.\rob.v	/^    input  wire     [`ROB_WIDTH] in_decoder_rs_reorder,$/;"	p
+wire	.\rob.v	/^    input  wire     [`ROB_WIDTH] in_decoder_rt_reorder,$/;"	p
+wire	.\rob.v	/^    input  wire     [`ROB_WIDTH] in_lsb_reorder,$/;"	p
+wire	.\rob.v	/^    input  wire     [`ROB_WIDTH] in_rob_assign_reorder,$/;"	p
+wire	.\rob.v	/^    input  wire     in_clk,$/;"	p
+wire	.\rob.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\rob.v	/^    input  wire     in_rst,$/;"	p
+wire	.\rob.v	/^    output wire     out_capacity_full$/;"	p
+wire	.\rs.v	/^    input  wire     [`DATA_WIDTH] in_decoder_Vj,$/;"	p
+wire	.\rs.v	/^    input  wire     [`DATA_WIDTH] in_decoder_Vk,$/;"	p
+wire	.\rs.v	/^    input  wire     [`DATA_WIDTH] in_rob_value,$/;"	p
+wire	.\rs.v	/^    input  wire     [`OPERATOR_WIDTH] in_decoder_type,$/;"	p
+wire	.\rs.v	/^    input  wire     [`REG_WIDTH] in_decoder_assign_num,$/;"	p
+wire	.\rs.v	/^    input  wire     [`ROB_WIDTH] in_decoder_Qj,$/;"	p
+wire	.\rs.v	/^    input  wire     [`ROB_WIDTH] in_decoder_Qk,$/;"	p
+wire	.\rs.v	/^    input  wire     [`ROB_WIDTH] in_decoder_dest,$/;"	p
+wire	.\rs.v	/^    input  wire     [`ROB_WIDTH] in_rob_reorder,$/;"	p
+wire	.\rs.v	/^    input  wire     in_clk,$/;"	p
+wire	.\rs.v	/^    input  wire     in_rdy,$/;"	p
+wire	.\rs.v	/^    input  wire     in_rob_flush,$/;"	p
+wire	.\rs.v	/^    input  wire     in_rst,$/;"	p
+wire	.\rs.v	/^    output wire     out_capacity_full$/;"	p
+wr_en_prot	.\common\fifo\fifo.v	/^wire wr_en_prot;$/;"	n
