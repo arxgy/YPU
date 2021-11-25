@@ -59,7 +59,8 @@ module rs (
             assign ready_entry[i] = (busy_entry[i] && (qj_entry[i] == `ZERO_ROB) && (qk_entry[i] == `ZERO_ROB));
         end        
     endgenerate
-
+    wire [31:0] qk_3EE8 = qk_entry[4'd1];
+    wire [31:0] vk_3EE8 = vk_entry[4'd1];
     always @(posedge in_clk) begin
         if (in_rst) begin
             out_alu_enable <= `FALSE;
@@ -85,11 +86,11 @@ module rs (
                     if (in_decoder_assign_enable && lsb_iter == assign_index) begin
                         if (in_decoder_Qj == in_lsb_broadcast_reorder) begin 
                             qj_entry[lsb_iter] <= `ZERO_ROB;
-                            vj_entry[lsb_iter] <= in_lsb_broadcast_reorder;
+                            vj_entry[lsb_iter] <= in_lsb_broadcast_result;
                         end
                         if (in_decoder_Qk == in_lsb_broadcast_reorder) begin
                             qk_entry[lsb_iter] <= `ZERO_ROB;
-                            vk_entry[lsb_iter] <= in_lsb_broadcast_reorder;
+                            vk_entry[lsb_iter] <= in_lsb_broadcast_result;
                         end
                     end
                     else begin

@@ -53,7 +53,7 @@ module rob (
 // initial begin
 //     fd = $fopen("inst.out", "w");
 // end
-    // integer fd;
+    integer fd;
     integer iter;
     reg                   empty;
     reg [`ROB_WIDTH]      head, tail;      //next entry
@@ -64,7 +64,7 @@ module rob (
     reg [`ADDRESS_WIDTH]  branch_entry [`ROB_ENTRY]; //default: 4, jal: sext(imm)
     reg                   io_read_entry[`ROB_ENTRY];
     reg                   ready_entry  [`ROB_ENTRY];
-    
+    reg [31:0]  inst_counter;
     assign out_decoder_rs_ready = ready_entry[in_decoder_rs_reorder];
     assign out_decoder_rt_ready = ready_entry[in_decoder_rt_reorder];
     assign out_decoder_rs_value = value_entry[in_decoder_rs_reorder];
@@ -72,18 +72,24 @@ module rob (
     assign out_decoder_tail     = tail;
 
     assign out_capacity_full = (head == tail + 4'd1 || (head == `HEAD_ROB_ENTRY && tail == `TAIL_ROB_ENTRY) || (tail == head) && !empty);
-    
+    initial begin
+        inst_counter <= 0;
+    end
     wire [`OPERATOR_WIDTH] dbg_head_tp = type_entry[head];
     wire [`ADDRESS_WIDTH]  dbg_head_pc = pc_entry  [head];
     wire dbg_commit_reg_a0 = out_reg_commit_rd == 5'd10;
     wire dbg_commit_reg_a1 = out_reg_commit_rd == 5'd11;
+    wire dbg_commit_reg_a3 = out_reg_commit_rd == 5'd13;
     wire dbg_commit_reg_a5 = out_reg_commit_rd == 5'd15;
+    wire dbg_commit_reg_a6 = out_reg_commit_rd == 5'd16;
     wire dbg_commit_reg_s0 = out_reg_commit_rd == 5'd8;
+    wire dbg_commit_reg_s1 = out_reg_commit_rd == 5'd9;
     wire dbg_commit_reg_s4 = out_reg_commit_rd == 5'd20;
     wire dbg_commit_reg_s6 = out_reg_commit_rd == 5'd22;
     wire dbg_commit_reg_s11 = out_reg_commit_rd == 5'd27;
     wire dbg_commit_0x1e64 = pc_entry[head] == 32'd7780;
     wire dbg_commit_reg_sp = out_reg_commit_rd == 5'd1;
+    wire dbg_commit_0x29fc = pc_entry[head] == 32'd10748;
     
     always @(posedge in_clk) begin
         if (in_rst) begin
@@ -120,7 +126,7 @@ module rob (
                 ready_entry  [in_alu_broadcast_reorder] <= `TRUE;
                 value_entry  [in_alu_broadcast_reorder] <=  in_alu_broadcast_result;
                 branch_entry [in_alu_broadcast_reorder] <=  in_alu_broadcast_branch;
-                io_read_entry[in_lsb_broadcast_reorder] <= `FALSE;
+                io_read_entry[in_alu_broadcast_reorder] <= `FALSE;
             end
             if (in_lsb_store_ready) begin
                 ready_entry[in_lsb_store_reorder]   <= `TRUE;
@@ -131,6 +137,8 @@ module rob (
             //lsb_store, flush, reg_commit, io_read_commit
             if (!empty && ready_entry[head]) begin
                 // $fdisplay(fd, "%h",pc_entry[head]);    
+                // $fdisplay(fd, inst_counter);
+                inst_counter = inst_counter + 1;
                 if (head == `TAIL_ROB_ENTRY) begin
                     head <= `HEAD_ROB_ENTRY;
                     if (tail == `HEAD_ROB_ENTRY) empty <= `TRUE;
@@ -151,6 +159,8 @@ module rob (
                     out_lsb_store_enable <= `FALSE;
                     if (type_entry[head] == `JAL || type_entry[head] == `JALR) begin  
                         out_reg_commit_enable  <= `TRUE;
+                        // $fdisplay(fd, "commit rd: ", dest_entry[head]);
+                        // $fdisplay(fd, "commit value ", value_entry[head]);
                         out_reg_commit_rd      <= dest_entry[head];
                         out_reg_commit_reorder <= head;
                         out_reg_commit_value   <= value_entry[head];
@@ -172,7 +182,9 @@ module rob (
                     out_flush_enable      <= `FALSE;
                     out_lsb_store_enable  <= `FALSE;
                     if (type_entry[head] != `NOP) begin
-                        // $display("normal comit", $time);    
+                        // $display("normal comit", $time); 
+                        // $fdisplay(fd, "commit rd: ", dest_entry[head]);
+                        // $fdisplay(fd, "commit value ", value_entry[head]);   
                         out_reg_commit_enable  <= `TRUE;
                         out_reg_commit_rd      <= dest_entry[head];
                         out_reg_commit_reorder <= head;

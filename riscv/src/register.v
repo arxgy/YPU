@@ -42,16 +42,21 @@ module register (
     assign out_decoder_rt_reorder = reg_reorder[in_decoder_rt];
 wire [`DATA_WIDTH] reg_a0 = reg_data[5'd10];
 wire [`DATA_WIDTH] reg_a1 = reg_data[5'd11];
+wire [`DATA_WIDTH] reg_a3 = reg_data[5'd13];
 wire [`DATA_WIDTH] reg_a5 = reg_data[5'd15];
+wire [`DATA_WIDTH] reg_a6 = reg_data[5'd16];
 wire [`DATA_WIDTH] reg_s0 = reg_data[5'd8];
 wire [`DATA_WIDTH] reg_s2 = reg_data[5'd18];
 wire [`DATA_WIDTH] reg_zero = reg_data[5'd0];
 wire [`DATA_WIDTH] reg_s4 = reg_data[5'd20];
 wire [`DATA_WIDTH] reg_s6 = reg_data[5'd22];
+wire [`DATA_WIDTH] reg_s1 = reg_data[5'd9];
 wire [`DATA_WIDTH] reg_s11 = reg_data[5'd27];
 wire [`DATA_WIDTH] reg_sp = reg_data[5'd1];
 wire [`ROB_WIDTH]  reg_sp_reorder = reg_reorder[5'd1];
 wire               reg_sp_busy = reg_busy[5'd1];
+wire [`ROB_WIDTH]  reg_a0_reorder = reg_reorder[5'd10];
+wire               reg_a0_busy = reg_busy[5'd10];
     always @(posedge in_clk) begin
         if (in_rst) begin
             for (iter = 0 ; iter < `REG_SIZE ; iter = iter+1) begin

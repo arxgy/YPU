@@ -23,22 +23,23 @@ float mysqrt(float x) {
 }
 
 int main() {
-    for (float z = 1.5f; z > -1.5f; z -= 0.05f) {
-        for (float x = -1.5f; x < 1.5f; x += 0.025f) {
-            float v = f(x, 0.0f, z);
-            if (v <= 0.0f) {
-                float y0 = h(x, z);
-                float ny = 0.01f;
-                float nx = h(x + ny, z) - y0;
-                float nz = h(x, z + ny) - y0;
-                float nd = 1.0f / mysqrt(nx * nx + ny * ny + nz * nz);
-                float d = (nx + ny - nz) * nd * 0.5f + 0.5f;
-                int index = (int)(d * 5.0f);
-                putchar(".:-=+*#%@"[index]);
-            }
-            else
-                putchar('_');
-        }
-        putchar('\n');
-    }
+    
+    // for (float z = 1.2f; z > -1.5f; z -= 0.05f) {
+    //     for (float x = -0.7f; x < 1.5f; x += 0.025f) {
+    //         float v = f(x, 0.0f, z);
+    //         if (v <= 0.0f) {
+    //             float y0 = h(x, z);
+    //             float ny = 0.01f;
+    //             float nx = h(x + ny, z) - y0;
+    //             float nz = h(x, z + ny) - y0;
+    //             float nd = 1.0f / mysqrt(nx * nx + ny * ny + nz * nz);
+    //             float d = (nx + ny - nz) * nd * 0.5f + 0.5f;
+    //             int index = (int)(d * 5.0f);
+    //             putchar(".:-=+*#%@"[index]);
+    //         }
+    //         else
+    //             putchar('_');
+    //     }
+    //     putchar('\n');
+    // }
 }

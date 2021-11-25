@@ -83,7 +83,7 @@ always @(posedge clk)
   end
 
 assign dout_a = ram[q_addr_a];
-
+wire [31:0] data_1FF94 = {ram[32'd130964], ram[32'd130965], ram[32'd130966], ram[32'd130967]};
 // initialize ram content (for simulation)
 integer i;
 initial begin
