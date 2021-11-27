@@ -22,10 +22,9 @@ module rob (
     output wire     [`ROB_WIDTH]  out_decoder_tail,
         //query entry message (conbinational)
     //connect with Decoder  
-    input  wire     in_lsb_store_ready,
-    input  wire     [`ROB_WIDTH]    in_lsb_store_reorder,
     output reg      out_lsb_io_read_commit,
-    output reg      out_lsb_store_enable,
+    output wire     out_lsb_store_enable,
+    input  wire     in_lsb_store_over,
     //connect with lsb 
 
     output reg      out_reg_commit_enable,
@@ -50,9 +49,9 @@ module rob (
     
     //lsb broadcast
 );
-// initial begin
-//     fd = $fopen("inst.out", "w");
-// end
+initial begin
+    fd = $fopen("inst.out", "w");
+end
     integer fd;
     integer iter;
     reg                   empty;
@@ -70,7 +69,7 @@ module rob (
     assign out_decoder_rs_value = value_entry[in_decoder_rs_reorder];
     assign out_decoder_rt_value = value_entry[in_decoder_rt_reorder];
     assign out_decoder_tail     = tail;
-
+    assign out_lsb_store_enable = is_store(type_entry[head]);
     assign out_capacity_full = (head == tail + 4'd1 || (head == `HEAD_ROB_ENTRY && tail == `TAIL_ROB_ENTRY) || (tail == head) && !empty);
     initial begin
         inst_counter <= 0;
@@ -87,9 +86,19 @@ module rob (
     wire dbg_commit_reg_s4 = out_reg_commit_rd == 5'd20;
     wire dbg_commit_reg_s6 = out_reg_commit_rd == 5'd22;
     wire dbg_commit_reg_s11 = out_reg_commit_rd == 5'd27;
-    wire dbg_commit_0x1e64 = pc_entry[head] == 32'd7780;
-    wire dbg_commit_reg_sp = out_reg_commit_rd == 5'd1;
-    wire dbg_commit_0x29fc = pc_entry[head] == 32'd10748;
+    
+    always @(posedge in_lsb_store_over) begin
+        $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
+        inst_counter = inst_counter + 1;
+        if (head == `TAIL_ROB_ENTRY) begin
+            head <= `HEAD_ROB_ENTRY;
+            if (tail == `HEAD_ROB_ENTRY) empty <= `TRUE;
+        end
+        else begin
+            head <= head + 4'd1;
+            if (head + 4'd1 == tail) empty <= `TRUE;
+        end     
+    end
     
     always @(posedge in_clk) begin
         if (in_rst) begin
@@ -97,7 +106,6 @@ module rob (
             tail  <= `HEAD_ROB_ENTRY;
             empty <= `TRUE;
             out_flush_enable       <= `FALSE;
-            out_lsb_store_enable   <= `FALSE;
             out_reg_commit_enable  <= `FALSE;
             out_lsb_io_read_commit <= `FALSE;
             for (iter = 1 ; iter < `ROB_SIZE ; iter = iter+1 ) begin
@@ -128,16 +136,9 @@ module rob (
                 branch_entry [in_alu_broadcast_reorder] <=  in_alu_broadcast_branch;
                 io_read_entry[in_alu_broadcast_reorder] <= `FALSE;
             end
-            if (in_lsb_store_ready) begin
-                ready_entry[in_lsb_store_reorder]   <= `TRUE;
-                io_read_entry[in_lsb_store_reorder] <= `FALSE;
-            end
-            //commit
-            //control enable wire:
-            //lsb_store, flush, reg_commit, io_read_commit
-            if (!empty && ready_entry[head]) begin
-                // $fdisplay(fd, "%h",pc_entry[head]);    
-                // $fdisplay(fd, inst_counter);
+
+            if (!empty && ready_entry[head] && !is_store(type_entry[head])) begin
+                $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
                 inst_counter = inst_counter + 1;
                 if (head == `TAIL_ROB_ENTRY) begin
                     head <= `HEAD_ROB_ENTRY;
@@ -156,11 +157,9 @@ module rob (
                     else begin
                         out_flush_enable     <= `FALSE;
                     end
-                    out_lsb_store_enable <= `FALSE;
                     if (type_entry[head] == `JAL || type_entry[head] == `JALR) begin  
-                        out_reg_commit_enable  <= `TRUE;
-                        // $fdisplay(fd, "commit rd: ", dest_entry[head]);
-                        // $fdisplay(fd, "commit value ", value_entry[head]);
+                        out_reg_commit_enable  <= `TRUE;                    
+                        $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
                         out_reg_commit_rd      <= dest_entry[head];
                         out_reg_commit_reorder <= head;
                         out_reg_commit_value   <= value_entry[head];
@@ -170,21 +169,10 @@ module rob (
                     end
                     out_lsb_io_read_commit <= `FALSE;
                 end             
-                //store commit (send enable to lsb)
-                else if(is_store(type_entry[head])) begin
-                    out_flush_enable       <= `FALSE;
-                    out_lsb_store_enable   <= `TRUE;
-                    out_reg_commit_enable  <= `FALSE;
-                    out_lsb_io_read_commit <= `FALSE;
-                end
-                //normal commit
-                else begin
+                else begin                                //normal commit
                     out_flush_enable      <= `FALSE;
-                    out_lsb_store_enable  <= `FALSE;
                     if (type_entry[head] != `NOP) begin
-                        // $display("normal comit", $time); 
-                        // $fdisplay(fd, "commit rd: ", dest_entry[head]);
-                        // $fdisplay(fd, "commit value ", value_entry[head]);   
+                        $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
                         out_reg_commit_enable  <= `TRUE;
                         out_reg_commit_rd      <= dest_entry[head];
                         out_reg_commit_reorder <= head;
@@ -193,6 +181,7 @@ module rob (
                     else begin
                         out_reg_commit_enable  <= `FALSE;
                     end
+
                     if (is_load(type_entry[head]) && io_read_entry[head]) begin
                         out_lsb_io_read_commit <= `TRUE;
                     end
@@ -203,10 +192,9 @@ module rob (
             end
             else begin
                 out_flush_enable       <= `FALSE;
-                out_lsb_store_enable   <= `FALSE;
                 out_reg_commit_enable  <= `FALSE;
                 out_lsb_io_read_commit <= `FALSE;
-            end //latch
+            end 
         
         end
     end

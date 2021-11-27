@@ -23,7 +23,7 @@ int main() {
     char a[5] = "A";
 	char b[5] = "B";
 	char c[5] = "C";
-    int d = inl();
+    int d = 10;
     int sum = cd(d, a, b, c, 0);
     outlln(sum);
     return 0;

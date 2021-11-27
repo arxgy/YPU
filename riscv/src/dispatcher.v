@@ -1,3 +1,4 @@
+//to perform simulation, ignore io_buffer_full signal
 `include "def.v"
 module dispatcher (
     input  wire     in_clk,
@@ -46,23 +47,41 @@ end
 `define GRANT_LOAD\
 begin\
     push_status <= `LOAD_STATUS;\
-    push_cycle  <= 3'd1;\
+    push_cycle  <=  3'd1;\
     out_mem_addr <= load_request_addr;\
     out_mem_wr_signal <= `READ_SIGNAL;\
 end
 `define GRANT_STORE\
 begin\
     push_status <= `STORE_STATUS;\
-    push_cycle  <= 3'd1;\
+    push_cycle  <=  3'd1;\
     out_mem_addr <= store_request_addr;\
     out_mem_data <= store_request_data[7:0];\
     out_mem_wr_signal <= `WRITE_SIGNAL;\
 end
 `define GRANT_IDLE\
 begin\
+    out_mem_addr <= `ZERO_ADDR;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
     push_status <= `IDLE_STATUS;\
-    push_cycle  <= 3'd0;\
+    push_cycle  <=  3'd0;\
 end
+
+`define PUSH_PC\
+begin\
+    push_status <= `PC_STATUS;\
+    push_cycle  <=  push_cycle + 3'd1;\
+    out_mem_addr <= pc_request_addr + push_cycle;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
+end
+`define PUSH_LOAD\
+begin\
+    push_status <= `LOAD_STATUS;\
+    push_cycle  <= push_cycle + 3'd1;\
+    out_mem_addr <= load_request_addr + push_cycle;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
+end
+
 `define ARBIT_IDLE\
 begin\
     if (pc_buffering) `GRANT_PC\
@@ -72,7 +91,7 @@ begin\
         else                                                            `GRANT_IDLE\
     end\
     else if (store_buffering) begin\
-        if (store_request_addr[17:16] == 2'b11)                         `GRANT_STORE\   //normal store
+        if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE\   //normal store
         else if (!io_buffer_full && mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
         else                                                            `GRANT_IDLE\
     end\
@@ -93,13 +112,7 @@ begin\
     end\
     else `GRANT_IDLE\
 end
-`define PUSH_PC\
-begin\
-    push_status <= `PC_STATUS;\
-    push_cycle  <=  push_cycle + 3'd1;\
-    out_mem_addr <= pc_request_addr + push_cycle;\
-    out_mem_wr_signal <= `READ_SIGNAL;\
-end
+
 `define ARBIT_LOAD\
 begin\
     load_buffering <= `FALSE;\
@@ -111,13 +124,8 @@ begin\
     else if (pc_buffering) `GRANT_PC\
     else `GRANT_IDLE\
 end
-`define PUSH_LOAD\
-begin\
-    push_status <= `LOAD_STATUS;\
-    push_cycle  <= push_cycle + 3'd1;\
-    out_mem_addr <= load_request_addr + push_cycle;\
-    out_mem_wr_signal <= `READ_SIGNAL;\
-end
+
+
 `define ARBIT_STORE\
 begin\
     store_buffering <= `FALSE;\
@@ -128,6 +136,7 @@ begin\
     end\
     else `GRANT_IDLE\
 end
+
     reg  [`DISPATCH_STATUS_WIDTH] mem_status, push_status;
     reg  [`CYCLE_COUNTER_WIDTH]   mem_cycle,  push_cycle;  
     reg  [`MEM_BUFFER_DATA_WIDTH] buffer_data;       
@@ -147,6 +156,11 @@ end
     assign out_store_req_enable = !in_store_requesting && !store_buffering;
     
     wire dbg_output_store = in_store_requesting && in_store_addr[17:16] == 2'b11;
+    integer fd;
+    initial begin
+        fd = $fopen("tableOut.out", "w");
+    end
+
     always @(posedge in_pc_requesting) begin
         pc_buffering        <= `TRUE;
         pc_request_addr     <= in_pc_addr;

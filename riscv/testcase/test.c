@@ -1,50 +1,31 @@
 #include "io.h"
-//考察点：section 8 语句，包括if,while,for,break,continue,return等
-//算法：线性筛法求欧拉函数
-//样例输入：10
-//样例输出：
-//1
-//2
-//2
-//4
-//2
-//6
-//4
-//6
-//4
-
-int N;
-int M = 0;
-int check[20];
+int cd(int d, char* a, char* b, char* c, int sum) {
+    // sleep(5); // to prevent UART buffer from overflowing
+    if (d == 1) {
+        print("move ");
+        print(a);
+        print(" --> ");
+        println(c);
+        sum++;
+    } else {
+        sum = cd(d - 1, a, c, b, sum);
+        print("move ");
+        print(a);
+        print(" --> ");
+        println(c);
+        sum = cd(d - 1, b, a, c, sum);
+        sum++;
+    }
+    return sum;
+}
 
 int main() {
-    N = 10;
-	int i = 0;
-	while ( i <= N ) check[i++] = 1;
-	int phi[15];
-	int P[15];
-	phi[1] = 1;
-	for (i = 2; ; ++i ) {
-		if ( i > N ) break;
-		if ( check[i] ) {
-			P[++M] = i;
-			phi[i] = i - 1;
-		}
-		int k = i;
-		int i;
-		for (i = 1; i <= M && (k * P[i] <= N); i++) {
-			int tmp = k * P[i];
-			if ( tmp > N ) continue;
-			check[tmp] = 0;
-			if ( k % P[i] == 0) {
-				phi[tmp] = phi[k] * P[i];
-				break;
-			}
-			else {
-				phi[k * P[i]] = phi[k] * (P[i] - 1);
-			}
-		}
-		outlln(phi[k]);
-	}
+    char a[5] = "A";
+	char b[5] = "B";
+	char c[5] = "C";
+    int d = 10;
+    int sum = cd(d, a, b, c, 0);
+    outlln(sum);
     return 0;
 }
+

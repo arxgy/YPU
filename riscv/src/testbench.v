@@ -27,7 +27,7 @@ initial begin
 end
 
 initial begin
-  $dumpfile("testbench.vcd");
+  $dumpfile("testbench1.vcd");
   $dumpvars;
 end
 endmodule

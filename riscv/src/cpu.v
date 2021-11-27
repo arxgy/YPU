@@ -39,8 +39,7 @@ module cpu(
     wire lsb_full, rs_full, rob_full;
     wire cdb_flush_enable;
     wire rob_to_lsb_store_enable, rob_to_lsb_io_read_enable;
-    wire lsb_to_rob_store_ready;
-    wire [`ROB_WIDTH] lsb_to_rob_store_reorder;
+    wire lsb_to_rob_store_over;
     wire fetch_to_pc_stall;
     wire pc_to_fetch_enable;
     wire [`ADDRESS_WIDTH] pc_to_fetch_pc;
@@ -105,9 +104,10 @@ module cpu(
 
     fetcher FETCH(
         .in_clk                     (clk_in),
-        .in_rst                     (rst_in || (rdy_in && cdb_flush_enable)),
+        .in_rst                     (rst_in),
         .in_rdy                     (rdy_in),
         .in_stall                   (entry_full),
+        .in_flush_enable            (cdb_flush_enable),
 
         .in_fetcher_enable          (pc_to_fetch_enable),
         .in_pc                      (pc_to_fetch_pc),
@@ -211,10 +211,9 @@ module cpu(
         .in_decoder_dest          (decode_reorder),
         .in_decoder_pc            (decode_pc),
 
-        .out_rob_store_ready      (lsb_to_rob_store_ready),
-        .out_rob_store_reorder    (lsb_to_rob_store_reorder),
         .in_rob_store_enable      (rob_to_lsb_store_enable),
         .in_rob_io_read_commit    (rob_to_lsb_io_read_enable),
+        .out_rob_store_over       (lsb_to_rob_store_over),
         
         .out_dispatch_load_requesting   (lsb_to_dispatch_load_req),
         .out_dispatch_load_addr         (lsb_to_dispatch_load_addr),
@@ -291,10 +290,9 @@ module cpu(
         .out_decoder_rt_value     (rob_to_decode_rt_value),
         .out_decoder_tail         (rob_to_decode_tail),
 
-        .in_lsb_store_ready       (lsb_to_rob_store_ready),
-        .in_lsb_store_reorder     (lsb_to_rob_store_reorder),
         .out_lsb_io_read_commit   (rob_to_lsb_io_read_enable),
         .out_lsb_store_enable     (rob_to_lsb_store_enable),
+        .in_lsb_store_over        (lsb_to_rob_store_over),
 
         .out_reg_commit_enable    (rob_to_reg_commit_enable),
         .out_reg_commit_rd        (rob_to_reg_commit_rd),
