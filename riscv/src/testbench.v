@@ -21,6 +21,9 @@ initial begin
   rst=0; 
   forever begin
     #1 clk=!clk;
+    // if ($time >= 5000) begin
+    //   $finish;
+    // end
   end
   
   $finish;

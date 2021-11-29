@@ -59,8 +59,11 @@ module rs (
             assign ready_entry[i] = (busy_entry[i] && (qj_entry[i] == `ZERO_ROB) && (qk_entry[i] == `ZERO_ROB));
         end        
     endgenerate
-    wire [31:0] qk_3EE8 = qk_entry[4'd1];
-    wire [31:0] vk_3EE8 = vk_entry[4'd1];
+    wire [31:0] pc_11c4 = pc_entry[4'd1];
+    wire [31:0] qk_11c4 = qk_entry[4'd1];
+    wire [31:0] vk_11c4 = vk_entry[4'd1];
+    wire [31:0] qj_11c4 = qj_entry[4'd1];
+    wire [31:0] vj_11c4 = vk_entry[4'd1];
     always @(posedge in_clk) begin
         if (in_rst) begin
             out_alu_enable <= `FALSE;

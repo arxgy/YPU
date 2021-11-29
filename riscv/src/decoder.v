@@ -7,6 +7,7 @@ module decoder (
 
     input  wire     [`INSTRUCTION_WIDTH] inst,
     input  wire     [`ADDRESS_WIDTH] pc,
+    input  wire     predict,
     //connect with fetcher
 
     output wire     [`OPERATOR_WIDTH] out_type,
@@ -25,13 +26,15 @@ module decoder (
     output wire     out_rs_assign_enable,
     output wire     out_rob_assign_enable,
     
+    output wire     out_rob_predict,
     output wire     [`ROB_WIDTH] out_rob_rs_reorder, 
     output wire     [`ROB_WIDTH] out_rob_rt_reorder,
     input  wire     in_rob_rs_ready,
     input  wire     in_rob_rt_ready,
     input  wire     [`DATA_WIDTH] in_rob_rs_value,
     input  wire     [`DATA_WIDTH] in_rob_rt_value,
-    input  wire     [`ROB_WIDTH]  in_rob_tail,     
+    input  wire     [`ROB_WIDTH]  in_rob_tail,    
+
     //connect with ROB
 
     output wire     out_reg_write_enable,
@@ -67,8 +70,8 @@ module decoder (
     assign out_rob_assign_enable = in_decode_enable ? `TRUE : `FALSE;
     assign out_rob_rs_reorder    = in_reg_rs_busy ? in_reg_rs_reorder : `ZERO_ROB;
     assign out_rob_rt_reorder    = in_reg_rt_busy ? in_reg_rt_reorder : `ZERO_ROB;
-    
-    assign out_reg_write_enable  = in_decode_enable ? ((inst[6:0] == `STORE_OP || inst[6:0] == `BRANCH_OP)? `FALSE : `TRUE ) : `FALSE;
+    assign out_rob_predict       = predict;
+    assign out_reg_write_enable  = in_decode_enable ? ((inst[6:0] == `STORE_OP || inst[6:0] == `BRANCH_OP)? `FALSE : out_rd != `ZERO_REG ) : `FALSE;
     
     function [`OPERATOR_WIDTH] get_inst_type(input [`INSTRUCTION_WIDTH] inst);
         begin

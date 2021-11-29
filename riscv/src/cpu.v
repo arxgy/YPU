@@ -41,12 +41,18 @@ module cpu(
     wire rob_to_lsb_store_enable, rob_to_lsb_io_read_enable;
     wire lsb_to_rob_store_over;
     wire fetch_to_pc_stall;
+    wire fetch_to_pc_last_enable;
+    wire [`INSTRUCTION_WIDTH] fetch_to_pc_last_inst;
     wire pc_to_fetch_enable;
     wire [`ADDRESS_WIDTH] pc_to_fetch_pc;
+    wire pc_to_fetch_predict;
+    wire rob_to_pc_feedback;
+    wire [`ADDRESS_WIDTH] rob_to_pc_commit_pc;
     wire [`ADDRESS_WIDTH] rob_to_pc_branch_pc;
     wire fetch_to_decode_enable;
     wire [`INSTRUCTION_WIDTH] fetch_to_decode_inst;
     wire [`ADDRESS_WIDTH]     fetch_to_decode_pc;
+    wire fetch_to_decode_predict;
     wire [`INSTRUCTION_WIDTH] dispatch_to_fetch_inst;
     wire pc_to_dispatch_req;              wire [`ADDRESS_WIDTH] pc_to_dispatch_req_addr;
     wire lsb_to_dispatch_load_req;        wire [`ADDRESS_WIDTH] lsb_to_dispatch_load_addr;    wire [`RW_STYLE_WIDTH] lsb_to_dispatch_load_style;
@@ -63,6 +69,7 @@ module cpu(
     wire [`DATA_WIDTH]     decode_vj, decode_vk;
     wire [`ADDRESS_WIDTH]  decode_pc;
     wire [`REG_WIDTH]      decode_rd, decode_rs, decode_rt;
+    wire                   decode_to_rob_predict;
     wire [`ROB_WIDTH]      decode_to_rob_rs_reorder, decode_to_rob_rt_reorder;
     wire rob_to_decode_rs_ready, rob_to_decode_rt_ready;
     wire [`DATA_WIDTH]     rob_to_decode_rs_value,   rob_to_decode_rt_value;
@@ -96,10 +103,15 @@ module cpu(
         .in_stall                   (entry_full || fetch_to_pc_stall),
  
         .in_flush_enable            (cdb_flush_enable),
+        .in_feedback_enable         (rob_to_pc_feedback),
+        .in_rob_commit_pc           (rob_to_pc_commit_pc),
         .in_rob_branch_pc           (rob_to_pc_branch_pc),
  
+        .in_fetcher_last_enable     (fetch_to_pc_last_enable),
+        .in_fetcher_last_inst       (fetch_to_pc_last_inst),
         .out_fetcher_enable         (pc_to_fetch_enable),
-        .out_fetcher_pc             (pc_to_fetch_pc)
+        .out_fetcher_pc             (pc_to_fetch_pc),
+        .out_fetcher_predict        (pc_to_fetch_predict)
     );
 
     fetcher FETCH(
@@ -111,11 +123,15 @@ module cpu(
 
         .in_fetcher_enable          (pc_to_fetch_enable),
         .in_pc                      (pc_to_fetch_pc),
+        .in_predict                 (pc_to_fetch_predict),
         .out_pc_fetch_full          (fetch_to_pc_stall),
+        .out_pc_last_enable         (fetch_to_pc_last_enable),
+        .out_pc_last_inst           (fetch_to_pc_last_inst),
 
         .out_decoder_decode_enable  (fetch_to_decode_enable),
         .out_decoder_pc_inst        (fetch_to_decode_inst),
         .out_decoder_pc_addr        (fetch_to_decode_pc),
+        .out_decoder_pc_pre         (fetch_to_decode_predict),
 
         .out_dispatch_pc_requesting (pc_to_dispatch_req),
         .out_dispatch_pc_addr       (pc_to_dispatch_req_addr),
@@ -160,6 +176,7 @@ module cpu(
         .in_decode_enable         (fetch_to_decode_enable),
         .inst                     (fetch_to_decode_inst),
         .pc                       (fetch_to_decode_pc),
+        .predict                  (fetch_to_decode_predict),
 
         .out_type                 (decode_type),
         .out_imm                  (decode_imm),
@@ -177,6 +194,7 @@ module cpu(
         .out_rs_assign_enable     (decode_to_rs_assign_enable),
         .out_rob_assign_enable    (decode_to_rob_assign_enable),
 
+        .out_rob_predict          (decode_to_rob_predict),
         .out_rob_rs_reorder       (decode_to_rob_rs_reorder),
         .out_rob_rt_reorder       (decode_to_rob_rt_reorder),
         .in_rob_rs_ready          (rob_to_decode_rs_ready),
@@ -279,6 +297,7 @@ module cpu(
         .out_capacity_full        (rob_full),
 
         .in_decoder_assign_enable (decode_to_rob_assign_enable),
+        .in_decoder_predict       (decode_to_rob_predict),
         .in_decoder_type          (decode_type),
         .in_decoder_rd            (decode_rd),
         .in_decoder_pc            (decode_pc),
@@ -299,6 +318,8 @@ module cpu(
         .out_reg_commit_value     (rob_to_reg_commit_value),
         .out_reg_commit_reorder   (rob_to_reg_commit_reorder),
 
+        .out_pc_feedback_enable   (rob_to_pc_feedback),
+        .out_pc_commit_pc         (rob_to_pc_commit_pc),
         .out_pc_branch_pc         (rob_to_pc_branch_pc),
 
         .in_alu_broadcast_enable  (cdb_alu_broadcast_enable),

@@ -1,4 +1,4 @@
-//to perform simulation, ignore io_buffer_full signal
+//ignore io_buffer_full signal when performming simulation, 
 `include "def.v"
 module dispatcher (
     input  wire     in_clk,
@@ -86,13 +86,13 @@ end
 begin\
     if (pc_buffering) `GRANT_PC\
     else if (load_buffering) begin\
-        if (load_request_addr[17:16] != 2'b11 || !io_buffer_full)       `GRANT_LOAD\
+        if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD\
         else if (store_buffering && store_request_addr[17:16] != 2'b11) `GRANT_STORE\
         else                                                            `GRANT_IDLE\
     end\
     else if (store_buffering) begin\
         if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE\   //normal store
-        else if (!io_buffer_full && mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
+        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
         else                                                            `GRANT_IDLE\
     end\
     else `GRANT_IDLE\
@@ -101,13 +101,13 @@ end
 begin\
     pc_buffering <= `FALSE;\
     if (load_buffering) begin\
-        if (load_request_addr[17:16] != 2'b11 || !io_buffer_full)       `GRANT_LOAD\
+        if (load_request_addr[17:16] != 2'b11 )       `GRANT_LOAD\
         else if (store_buffering && store_request_addr[17:16] != 2'b11) `GRANT_STORE\
         else                                                            `GRANT_IDLE\
     end\
     else if(store_buffering) begin\
         if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE\   //normal store
-        else if (!io_buffer_full && mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
+        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
         else                                                            `GRANT_IDLE\
     end\
     else `GRANT_IDLE\
@@ -118,7 +118,7 @@ begin\
     load_buffering <= `FALSE;\
     if(store_buffering) begin\
         if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE\   //normal store
-        else if (!io_buffer_full && mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
+        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
         else                                                            `GRANT_IDLE\
     end\
     else if (pc_buffering) `GRANT_PC\
@@ -131,7 +131,7 @@ begin\
     store_buffering <= `FALSE;\
     if (pc_buffering) `GRANT_PC\
     else if (load_buffering) begin\
-        if (load_request_addr[17:16] != 2'b11 || !io_buffer_full)       `GRANT_LOAD\
+        if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD\
         else                                                            `GRANT_IDLE\
     end\
     else `GRANT_IDLE\

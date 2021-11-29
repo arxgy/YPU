@@ -19,8 +19,9 @@
 `define MEM_WIDTH 7:0
 `define FETCH_WIDTH 2:0
 `define QUEUE_WIDTH 3:0
-`define TAG_WIDTH 23:0
+`define TAG_WIDTH 9:0
 `define INDEX_WIDTH 7:0
+`define TAKEN_WIDTH 1:0
 //define array
 `define REG_ENTRY 31:0
 `define RS_ENTRY  15:0
@@ -29,6 +30,7 @@
 `define FETCH_ENTRY 7:0
 `define QUEUE_ENTRY 15:0
 `define CACHE_ENTRY 255:0
+`define PREDICT_ENTRY 1023:0
 
 `define INST_TYPE_WIDTH 6:0
 `define INST_FUNC3_WIDTH 2:0
@@ -43,6 +45,7 @@
 `define FETCH_SIZE 8
 `define QUEUE_SIZE 16
 `define CACHE_SIZE 256
+`define PREDICT_SIZE 1024
 //default value
 `define NOP_INSTR 32'b0 
 `define ZERO_DATA 32'b0
@@ -165,9 +168,15 @@
 `define RW_HALF_WORD  2'b10
 `define RW_WORD 2'b11 
 
-//lsb entry status
-`define NULL  2'b11
-`define FINE  2'b00
-`define VISIT 2'b01
-`define READY 2'b10
+//predictor
+`define STRONG_NOT_TAKEN 2'b00
+`define WEAK_NOT_TAKEN 2'b01
+`define WEAK_TAKEN 2'b10
+`define STRONG_TAKEN 2'b11
 
+`define TAKEN  1'b1
+`define NOT_TAKEN 1'b0
+//for inst queue sync
+`define NULL_PRE 2'b00
+`define TAKE_PRE 2'b01
+`define NOT_TAKE_PRE 2'b10

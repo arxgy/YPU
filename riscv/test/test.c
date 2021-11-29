@@ -1,31 +1,28 @@
 #include "io.h"
-int cd(int d, char* a, char* b, char* c, int sum) {
-    // sleep(5); // to prevent UART buffer from overflowing
-    if (d == 1) {
-        print("move ");
-        print(a);
-        print(" --> ");
-        println(c);
-        sum++;
-    } else {
-        sum = cd(d - 1, a, c, b, sum);
-        print("move ");
-        print(a);
-        print(" --> ");
-        println(c);
-        sum = cd(d - 1, b, a, c, sum);
-        sum++;
-    }
-    return sum;
-}
+int main()
+{
+    int a[100][100];
+    int i;
+	int j;
+    int sum = 0;
 
-int main() {
-    char a[5] = "A";
-	char b[5] = "B";
-	char c[5] = "C";
-    int d = 10;
-    int sum = cd(d, a, b, c, 0);
+    for (i = 0;i < 100;i++)
+        for (j = 0;j < 100;j++)
+            a[i][j] = 0;
+    int quotient;
+    int remainder;
+    for (i = 0;i < 100;i++)
+    	if (i > 20 && i < 80) {
+        	for (j = 0;j < 100;j++)
+            	if (j > 5 || i < 90) {
+                    quotient = j * 4 / 100;
+                    remainder = j * 4 % 100;
+                	a[i + quotient][remainder] = j + (100 - 1 + 1 - 1 + 1) / 2;
+                }
+    	}
+
+    for (i = 0;i < 100;i++)
+        for (j = 0;j < 100;j++)
+            sum = sum + a[i][j];
     outlln(sum);
-    return 0;
 }
-

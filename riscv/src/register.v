@@ -48,6 +48,7 @@ wire [`DATA_WIDTH] reg_a6 = reg_data[5'd16];
 wire [`DATA_WIDTH] reg_s0 = reg_data[5'd8];
 wire [`DATA_WIDTH] reg_s2 = reg_data[5'd18];
 wire [`DATA_WIDTH] reg_zero = reg_data[5'd0];
+wire               reg_zero_busy = reg_busy[5'd0];
 wire [`DATA_WIDTH] reg_s4 = reg_data[5'd20];
 wire [`DATA_WIDTH] reg_s6 = reg_data[5'd22];
 wire [`DATA_WIDTH] reg_s1 = reg_data[5'd9];
