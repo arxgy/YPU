@@ -1,3 +1,4 @@
+
 //A port for Mem access from Instr Access and Data Access, issue Instr to decoder.
 //with 256 size icache
 `include "def.v"
@@ -15,6 +16,7 @@ module fetcher (
     input  wire     in_predict, 
     output wire     out_pc_fetch_full,
     output reg      out_pc_last_enable,
+    output reg      [`ADDRESS_WIDTH] out_pc_last_pc,
     output reg      [`INSTRUCTION_WIDTH] out_pc_last_inst,
     //connect with PC controller
 
@@ -101,6 +103,7 @@ module fetcher (
                 if (next != tail && !wait_entry[next]) begin 
                     if (cache_hit) begin
                         out_pc_last_enable <= `TRUE;
+                        out_pc_last_pc     <=  pc_entry[next];
                         out_pc_last_inst   <=  cache_inst;
                         inst_entry[next]   <=  cache_inst;
                         next <= next + 3'd1;
@@ -114,6 +117,7 @@ module fetcher (
                 
                 if (in_pc_data_enable) begin
                     out_pc_last_enable <= `TRUE;
+                    out_pc_last_pc     <=  pc_entry[next];
                     out_pc_last_inst   <=  in_dispatch_pc_inst;
                     wait_entry[next]   <= `FALSE;
                     inst_entry[next]   <=  in_dispatch_pc_inst;

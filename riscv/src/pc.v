@@ -15,6 +15,7 @@ module pc (
     //connect with ROB
 
     input  wire                          in_fetcher_last_enable,
+    input  wire     [`ADDRESS_WIDTH]     in_fetcher_last_pc,
     input  wire     [`INSTRUCTION_WIDTH] in_fetcher_last_inst,
     output reg                           out_fetcher_enable,
     output reg      [`ADDRESS_WIDTH]     out_fetcher_pc,
@@ -24,6 +25,7 @@ module pc (
     integer iter;
     reg [`TAKEN_WIDTH]       predict_table [`PREDICT_ENTRY];    //1024, [9:0]
     reg [`ADDRESS_WIDTH]     last_pc_add_4;
+    reg [`ADDRESS_WIDTH]     last_pc;
     reg                      last_enable;
     reg [`INSTRUCTION_WIDTH] last_inst;
     
@@ -32,7 +34,11 @@ module pc (
     always @(posedge in_fetcher_last_enable) begin  //1.stall storage; 2.together with flush: misbranch
         if (!in_flush_enable) begin
             last_enable <= `TRUE;
+            last_pc     <=  in_fetcher_last_pc;
             last_inst   <=  in_fetcher_last_inst;
+        end
+        else begin
+            last_enable <= `FALSE;
         end
     end
     
@@ -45,6 +51,7 @@ module pc (
             end
         end 
         else if(in_rdy) begin   //1. update table; 2.push pc to fetch
+
             if (in_flush_enable) begin              
                 case (predict_table[in_rob_commit_pc[9:0]]) 
                     `STRONG_NOT_TAKEN: predict_table[in_rob_commit_pc[9:0]] <= `WEAK_NOT_TAKEN;
@@ -74,9 +81,8 @@ module pc (
                     last_pc_add_4       <=  last_pc_add_4 + 4;
                     out_fetcher_predict <= `NOT_TAKEN;
                 end
-                else if (last_enable) begin             //get last pc's inst, push next inst to fetcher
+                else if (last_enable && last_pc == out_fetcher_pc) begin             //get last pc's inst, push next inst to fetcher
                     out_fetcher_enable  <= `TRUE;
-                    last_enable         <= `FALSE;
                     if (last_inst[6:0] == `BRANCH_OP) begin
                         if (predict_table[out_fetcher_pc[9:0]] == `STRONG_NOT_TAKEN || predict_table[out_fetcher_pc[9:0] == `WEAK_NOT_TAKEN]) begin
                             out_fetcher_pc      <=  last_pc_add_4;

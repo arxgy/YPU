@@ -62,22 +62,6 @@ module dispatcher (
         fd = $fopen("tableOut.out", "w");
     end
 
-    // always @(posedge in_pc_requesting) begin
-    //     pc_buffering        <= `TRUE;
-    //     pc_request_addr     <= in_pc_addr;
-    // end
-    // always @(posedge in_load_requesting) begin
-    //     load_buffering      <= `TRUE;
-    //     load_request_addr   <= in_load_addr;
-    //     load_request_style  <= in_load_style;
-    // end
-    // always @(posedge in_store_requesting) begin
-    //     store_buffering     <= `TRUE;
-    //     store_request_addr  <= in_store_addr;
-    //     store_request_style <= in_store_style;
-    //     store_request_data  <= in_store_value;
-    // end
-
     always @(posedge in_clk) begin
         if (in_rst) begin 
             mem_status            <= `IDLE_STATUS;    
@@ -197,7 +181,20 @@ module dispatcher (
                 endcase
 
                 case (push_status)
-                    `IDLE_STATUS: `ARBIT_IDLE
+                    `IDLE_STATUS: begin
+                        if (pc_buffering) `GRANT_PC
+                        else if (load_buffering) begin
+                            if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD
+                            else if (store_buffering && store_request_addr[17:16] != 2'b11) `GRANT_STORE
+                            else                                                            `GRANT_IDLE
+                        end
+                        else if (store_buffering) begin
+                            if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE   //normal store
+                            else if (mem_status == `IDLE_STATUS)         `GRANT_STORE   //io store
+                            else                                                            `GRANT_IDLE
+                        end
+                        else `GRANT_IDLE
+                    end
                     `PC_STATUS: begin
                         case (push_cycle)
                             3'd1: `PUSH_PC

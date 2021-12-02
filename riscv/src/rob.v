@@ -26,6 +26,7 @@ module rob (
     output reg      out_lsb_io_read_commit,
     output wire     out_lsb_store_enable,
     input  wire     in_lsb_store_over,
+    input  wire     [`ROB_WIDTH] in_lsb_store_reorder,
     //connect with lsb 
 
     output reg      out_reg_commit_enable,
@@ -93,18 +94,18 @@ end
     wire dbg_commit_reg_s6 = out_reg_commit_rd == 5'd22;
     wire dbg_commit_reg_s11 = out_reg_commit_rd == 5'd27;
     
-    always @(posedge in_lsb_store_over) begin
-        $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
-        inst_counter = inst_counter + 1;
-        if (head == `TAIL_ROB_ENTRY) begin
-            head <= `HEAD_ROB_ENTRY;
-            if (tail == `HEAD_ROB_ENTRY) empty <= `TRUE;
-        end
-        else begin
-            head <= head + 4'd1;
-            if (head + 4'd1 == tail) empty <= `TRUE;
-        end     
-    end
+    // always @(posedge in_lsb_store_over) begin
+    //     $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
+    //     inst_counter = inst_counter + 1;
+    //     if (head == `TAIL_ROB_ENTRY) begin
+    //         head <= `HEAD_ROB_ENTRY;
+    //         if (tail == `HEAD_ROB_ENTRY) empty <= `TRUE;
+    //     end
+    //     else begin
+    //         head <= head + 4'd1;
+    //         if (head + 4'd1 == tail) empty <= `TRUE;
+    //     end     
+    // end
     
     always @(posedge in_clk) begin
         if (in_rst) begin
@@ -150,8 +151,12 @@ end
                 branch_entry [in_alu_broadcast_reorder] <=  in_alu_broadcast_branch;
                 io_read_entry[in_alu_broadcast_reorder] <= `FALSE;
             end
+            if (in_lsb_store_over) begin
+                ready_entry  [in_lsb_store_reorder] <= `TRUE;
+                io_read_entry[in_lsb_store_reorder] <= `FALSE;
+            end
 
-            if (!empty && ready_entry[head] && !is_store(type_entry[head])) begin
+            if (!empty && ready_entry[head]) begin
                 $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
                 inst_counter = inst_counter + 1;
                 if (head == `TAIL_ROB_ENTRY) begin
@@ -191,7 +196,7 @@ end
                         end
                     end
                 end             
-                else begin                                //normal commit
+                else if (!is_store(type_entry[head]))begin                                //normal commit
                     if (type_entry[head] != `NOP) begin                        
                         $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
                         out_reg_commit_enable  <= `TRUE;

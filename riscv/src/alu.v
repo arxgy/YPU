@@ -2,11 +2,6 @@
 //pc is handled by adder in reserve station.
 `include "def.v"
 module alu (
-    input  wire     in_clk,
-    input  wire     in_rst,
-    input  wire     in_rdy,
-    //connect with control-signal
-
     input  wire                       in_enable,
     input  wire     [`OPERATOR_WIDTH] type,
     input  wire     [`ADDRESS_WIDTH]  pc,
@@ -29,12 +24,18 @@ module alu (
     always @(*) begin
         if (in_enable) begin
             case (type)
-                `NOP: 
+                `NOP: begin
                     out_cdb_broadcast_result = `ZERO_DATA;
-                `LUI: 
+                    out_cdb_broadcast_branch = `ZERO_ADDR;
+                end
+                `LUI: begin
                     out_cdb_broadcast_result = imm;  
-                `AUIPC:
+                    out_cdb_broadcast_branch = `ZERO_ADDR;
+                end
+                `AUIPC: begin
                     out_cdb_broadcast_result= pc + imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;
+                end
                 `JAL: begin
                     out_cdb_broadcast_result = pc + 4;
                     out_cdb_broadcast_branch = pc + imm;
@@ -67,26 +68,87 @@ module alu (
                     out_cdb_broadcast_result = rs >= rt;
                     out_cdb_broadcast_branch = pc + imm;
                 end
-                `ADDI: out_cdb_broadcast_result = rs + imm;
-                `SLTI:out_cdb_broadcast_result = $signed(rs) < $signed(imm);
-                `SLTIU:out_cdb_broadcast_result= rs < imm;
-                `XORI:out_cdb_broadcast_result = rs ^ imm;
-                `ORI: out_cdb_broadcast_result = rs | imm;
-                `ANDI:out_cdb_broadcast_result = rs & imm;
-                `SLLI:out_cdb_broadcast_result = rs << imm;
-                `SRLI:out_cdb_broadcast_result = rs >> imm;
-                `SRAI:out_cdb_broadcast_result = rs >>> imm;
-
-                `ADD: out_cdb_broadcast_result = rs + rt;
-                `SUB: out_cdb_broadcast_result = rs - rt;
-                `SLL: out_cdb_broadcast_result = rs << rt;
-                `SLT: out_cdb_broadcast_result = $signed(rs) < $signed(rt);
-                `SLTU:out_cdb_broadcast_result = rs < rt;
-                `XOR: out_cdb_broadcast_result = rs ^ rt;
-                `SRL: out_cdb_broadcast_result = rs >> rt;
-                `SRA: out_cdb_broadcast_result = rs >>> rt;
-                `OR:  out_cdb_broadcast_result = rs | rt;
-                `AND: out_cdb_broadcast_result = rs & rt;
+                `ADDI: begin
+                    out_cdb_broadcast_result = rs + imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;
+                end 
+                `SLTI: begin 
+                    out_cdb_broadcast_result = $signed(rs) < $signed(imm);
+                    out_cdb_broadcast_branch = `ZERO_ADDR;
+                end
+                `SLTIU: begin
+                    out_cdb_broadcast_result= rs < imm;                    
+                    out_cdb_broadcast_branch = `ZERO_ADDR;
+                end
+                `XORI: begin
+                    out_cdb_broadcast_result = rs ^ imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;
+                end
+                `ORI: begin
+                    out_cdb_broadcast_result = rs | imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;                    
+                end
+                `ANDI:begin
+                    out_cdb_broadcast_result = rs & imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;                    
+                end
+                `SLLI: begin 
+                    out_cdb_broadcast_result = rs << imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;                  
+                end
+                `SRLI: begin
+                    out_cdb_broadcast_result = rs >> imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `SRAI: begin
+                    out_cdb_broadcast_result = rs >>> imm;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `ADD: begin
+                    out_cdb_broadcast_result = rs + rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `SUB: begin
+                    out_cdb_broadcast_result = rs - rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `SLL: begin
+                    out_cdb_broadcast_result = rs << rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `SLT: begin
+                    out_cdb_broadcast_result = $signed(rs) < $signed(rt);
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `SLTU: begin
+                    out_cdb_broadcast_result = rs < rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `XOR: begin
+                    out_cdb_broadcast_result = rs ^ rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `SRL: begin
+                    out_cdb_broadcast_result = rs >> rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `SRA: begin
+                    out_cdb_broadcast_result = rs >>> rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `OR:  begin
+                    out_cdb_broadcast_result = rs | rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                `AND: begin
+                    out_cdb_broadcast_result = rs & rt;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                default: begin
+                    out_cdb_broadcast_result = `ZERO_DATA;
+                    out_cdb_broadcast_branch = `ZERO_ADDR;     
+                end
+                    
             endcase
         end
     end

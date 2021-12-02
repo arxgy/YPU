@@ -16,12 +16,13 @@ module lsb (
     input  wire     [`DATA_WIDTH] in_decoder_Vj,
     input  wire     [`DATA_WIDTH] in_decoder_Vk,
     input  wire     [`ROB_WIDTH]  in_decoder_dest,
-    input  wire     [`ADDRESS_WIDTH] in_decoder_pc,
+    // input  wire     [`ADDRESS_WIDTH] in_decoder_pc,
     //connect with Decoder
 
     input  wire     in_rob_store_enable,    //pop 
     input  wire     in_rob_io_read_commit,
     output reg      out_rob_store_over,
+    output reg      [`ROB_WIDTH] out_rob_store_reorder,
     //connect with ROB
 
     output reg      out_dispatch_load_requesting,
@@ -49,6 +50,7 @@ module lsb (
     //cdb
 );
     integer iter, lsb_iter, alu_iter;
+    reg                    store_stall; //sequent store
     reg                    queue_empty, io_misbranched;
     reg  [`QUEUE_WIDTH]    queue_head, queue_tail;
     reg  [`DATA_WIDTH]     io_queue [`QUEUE_ENTRY];
@@ -63,7 +65,7 @@ module lsb (
     reg  [`ROB_WIDTH]      dest_entry  [`LSB_ENTRY];
     reg                    busy_entry  [`LSB_ENTRY];
     reg                    store_wait ;
-    reg  [`ADDRESS_WIDTH]  pc_entry    [`LSB_ENTRY];
+    // reg  [`ADDRESS_WIDTH]  pc_entry    [`LSB_ENTRY];
 
     wire cdb_lsb_broadcast_enable  = out_cdb_broadcast_enable;
     wire [`ROB_WIDTH]  cdb_lsb_broadcast_reorder = out_cdb_reorder; 
@@ -73,20 +75,22 @@ module lsb (
     reg  [`ROB_WIDTH]      last_load_dest;
     reg                    last_load_io;
 
-    wire [`DATA_WIDTH]     head_entry_addr;
+    wire [`DATA_WIDTH]     head_entry_addr = vj_entry[entry_head]+imm_entry[entry_head];
     assign out_capacity_full = (entry_head == entry_tail + 4'd1 || ((entry_tail == entry_head) && !entry_empty));
-    assign head_entry_addr   = vj_entry[entry_head]+imm_entry[entry_head];
+    
+    wire rob_head_is_store = store_stall ? `FALSE : in_rob_store_enable;    //head is updated & head is store
 
-    wire [`OPERATOR_WIDTH] dbg_head_type = type_entry[entry_head];
-    wire [`DATA_WIDTH] dbg_head_imm = imm_entry[entry_head];
-    wire [`ROB_WIDTH] dbg_head_qj = qj_entry[entry_head];
-    wire [`ROB_WIDTH] dbg_head_qk = qk_entry[entry_head];
-    wire [`DATA_WIDTH] dbg_head_vj = vj_entry[entry_head];
-    wire [`DATA_WIDTH] dbg_head_vk = vk_entry[entry_head];
-    wire [`ADDRESS_WIDTH] dbg_head_pc = pc_entry[entry_head];
-    wire [`ROB_WIDTH]   dbg_head_dest = dest_entry[entry_head];
+    // wire [`OPERATOR_WIDTH] dbg_head_type = type_entry[entry_head];
+    // wire [`DATA_WIDTH] dbg_head_imm = imm_entry[entry_head];
+    // wire [`ROB_WIDTH] dbg_head_qj = qj_entry[entry_head];
+    // wire [`ROB_WIDTH] dbg_head_qk = qk_entry[entry_head];
+    // wire [`DATA_WIDTH] dbg_head_vj = vj_entry[entry_head];
+    // wire [`DATA_WIDTH] dbg_head_vk = vk_entry[entry_head];
+    // wire [`ADDRESS_WIDTH] dbg_head_pc = pc_entry[entry_head];
+    // wire [`ROB_WIDTH]   dbg_head_dest = dest_entry[entry_head];
     always @(posedge in_clk) begin          //clear all
         if (in_rst) begin
+            store_stall        <= `FALSE;
             io_misbranched     <= `FALSE;
             store_wait         <= `FALSE;
             out_rob_store_over <= `FALSE;
@@ -104,6 +108,7 @@ module lsb (
         end 
         else if (in_rdy) begin
             if (in_flush_enable) begin      //clear, but maintain queue, maintain dispatch
+                store_stall        <= `FALSE;
                 if (queue_empty) io_misbranched <= `FALSE;
                 else             io_misbranched <= `TRUE;
                 store_wait <= `FALSE;
@@ -128,6 +133,10 @@ module lsb (
             end
             else begin
                 //queue pop
+                if (store_stall) begin //1 cycle delay
+                    store_stall <= `FALSE;
+                end
+
                 if (in_rob_io_read_commit) begin
                     queue_head <= queue_head + 4'd1;
                     if (queue_tail == queue_head + 4'd1) begin
@@ -147,7 +156,7 @@ module lsb (
                     vk_entry[entry_tail]   <= in_decoder_Vk;
                     dest_entry[entry_tail] <= in_decoder_dest;
                     busy_entry[entry_tail] <= `TRUE;
-                    pc_entry[entry_tail]   <= in_decoder_pc;
+                    // pc_entry[entry_tail]   <= in_decoder_pc;
                 end
 
                 //accept lsb/alu broadcast 
@@ -204,7 +213,7 @@ module lsb (
                     out_cdb_broadcast_enable <= `TRUE;
                     out_cdb_reorder <= last_load_dest;
                     out_cdb_io_read <= last_load_io;
-                    last_load_dest <= `ZERO_ROB;
+                    last_load_dest  <= `ZERO_ROB;
                     case (last_load_type)
                         `LB: out_cdb_result <= {{24{in_dispatch_load_value[7]}}, in_dispatch_load_value[7:0] };
                         `LH: out_cdb_result <= {{16{in_dispatch_load_value[15]}},in_dispatch_load_value[15:0]};
@@ -230,7 +239,7 @@ module lsb (
                 out_dispatch_load_requesting  <= `FALSE;
                 out_dispatch_store_requesting <= `FALSE;
                 if (!entry_empty) begin
-                    if (is_store(type_entry[entry_head]) && qj_entry[entry_head] == `ZERO_ROB && qk_entry[entry_head] == `ZERO_ROB && in_rob_store_enable && in_store_req_enable) begin
+                    if (is_store(type_entry[entry_head]) && qj_entry[entry_head] == `ZERO_ROB && qk_entry[entry_head] == `ZERO_ROB && rob_head_is_store && in_store_req_enable) begin
                         if (!store_wait) begin      //dispatch is empty, push to dispatch
                             out_rob_store_over <= `FALSE;
                             store_wait <= `TRUE;
@@ -244,8 +253,10 @@ module lsb (
                             endcase    
                         end
                         else begin                 //this store is over, inform rob to commit
-                            out_rob_store_over <= `TRUE;
-                            store_wait <= `FALSE;
+                            store_stall            <= `TRUE;
+                            out_rob_store_over     <= `TRUE;
+                            out_rob_store_reorder  <=  dest_entry[entry_head];
+                            store_wait             <= `FALSE;
                             busy_entry[entry_head] <= `FALSE;
                             entry_head <= entry_head + 4'd1;
                             if (entry_tail == entry_head + 4'd1 && !in_decoder_assign_enable) entry_empty <= `TRUE;
