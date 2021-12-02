@@ -180,3 +180,103 @@
 `define NULL_PRE 2'b00
 `define TAKE_PRE 2'b01
 `define NOT_TAKE_PRE 2'b10
+
+`define GRANT_PC\
+begin\
+    push_status <= `PC_STATUS;\
+    push_cycle  <=  3'd1;\
+    out_mem_addr      <= pc_request_addr;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
+end
+`define GRANT_LOAD\
+begin\
+    push_status <= `LOAD_STATUS;\
+    push_cycle  <=  3'd1;\
+    out_mem_addr <= load_request_addr;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
+end
+`define GRANT_STORE\
+begin\
+    push_status <= `STORE_STATUS;\
+    push_cycle  <=  3'd1;\
+    out_mem_addr <= store_request_addr;\
+    out_mem_data <= store_request_data[7:0];\
+    out_mem_wr_signal <= `WRITE_SIGNAL;\
+end
+`define GRANT_IDLE\
+begin\
+    out_mem_addr <= `ZERO_ADDR;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
+    push_status <= `IDLE_STATUS;\
+    push_cycle  <=  3'd0;\
+end
+
+`define PUSH_PC\
+begin\
+    push_status <= `PC_STATUS;\
+    push_cycle  <=  push_cycle + 3'd1;\
+    out_mem_addr <= pc_request_addr + push_cycle;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
+end
+`define PUSH_LOAD\
+begin\
+    push_status <= `LOAD_STATUS;\
+    push_cycle  <= push_cycle + 3'd1;\
+    out_mem_addr <= load_request_addr + push_cycle;\
+    out_mem_wr_signal <= `READ_SIGNAL;\
+end
+
+`define ARBIT_IDLE\
+begin\
+    if (pc_buffering) `GRANT_PC\
+    else if (load_buffering) begin\
+        if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD\
+        else if (store_buffering && store_request_addr[17:16] != 2'b11) `GRANT_STORE\
+        else                                                            `GRANT_IDLE\
+    end\
+    else if (store_buffering) begin\
+        if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE\   //normal store
+        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
+        else                                                            `GRANT_IDLE\
+    end\
+    else `GRANT_IDLE\
+end
+`define ARBIT_PC\
+begin\
+    pc_buffering <= `FALSE;\
+    if (load_buffering) begin\
+        if (load_request_addr[17:16] != 2'b11 )       `GRANT_LOAD\
+        else if (store_buffering && store_request_addr[17:16] != 2'b11) `GRANT_STORE\
+        else                                                            `GRANT_IDLE\
+    end\
+    else if(store_buffering) begin\
+        if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE\   //normal store
+        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
+        else                                                            `GRANT_IDLE\
+    end\
+    else `GRANT_IDLE\
+end
+
+`define ARBIT_LOAD\
+begin\
+    load_buffering <= `FALSE;\
+    if(store_buffering) begin\
+        if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE\   //normal store
+        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE\   //io store
+        else                                                            `GRANT_IDLE\
+    end\
+    else if (pc_buffering) `GRANT_PC\
+    else `GRANT_IDLE\
+end
+
+
+`define ARBIT_STORE\
+begin\
+    store_buffering <= `FALSE;\
+    if (pc_buffering) `GRANT_PC\
+    else if (load_buffering) begin\
+        if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD\
+        else                                                            `GRANT_IDLE\
+    end\
+    else `GRANT_IDLE\
+end
