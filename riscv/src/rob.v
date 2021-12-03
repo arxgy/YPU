@@ -52,10 +52,10 @@ module rob (
     input  wire     in_lsb_braodcast_io_read
     //lsb broadcast
 );
-initial begin
-    fd = $fopen("inst.out", "w");
-end
-    integer fd;
+// initial begin
+//     fd = $fopen("inst.out", "w");
+// end
+//     integer fd;
     integer iter;
     reg                   empty;
     reg [`ROB_WIDTH]      head, tail;      //next entry
@@ -94,18 +94,6 @@ end
     wire dbg_commit_reg_s6 = out_reg_commit_rd == 5'd22;
     wire dbg_commit_reg_s11 = out_reg_commit_rd == 5'd27;
     
-    // always @(posedge in_lsb_store_over) begin
-    //     $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
-    //     inst_counter = inst_counter + 1;
-    //     if (head == `TAIL_ROB_ENTRY) begin
-    //         head <= `HEAD_ROB_ENTRY;
-    //         if (tail == `HEAD_ROB_ENTRY) empty <= `TRUE;
-    //     end
-    //     else begin
-    //         head <= head + 4'd1;
-    //         if (head + 4'd1 == tail) empty <= `TRUE;
-    //     end     
-    // end
     
     always @(posedge in_clk) begin
         if (in_rst) begin
@@ -157,7 +145,7 @@ end
             end
 
             if (!empty && ready_entry[head]) begin
-                $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
+                // $fdisplay(fd, "%h",pc_entry[head], " ", inst_counter);    
                 inst_counter = inst_counter + 1;
                 if (head == `TAIL_ROB_ENTRY) begin
                     head <= `HEAD_ROB_ENTRY;
@@ -170,7 +158,7 @@ end
                 //branch commit
                 if (is_branch(type_entry[head])) begin
                     if (type_entry[head] == `JAL) begin         //always predict succeed
-                        $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
+                        // $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
                         out_reg_commit_enable  <= `TRUE;                    
                         out_reg_commit_rd      <= dest_entry[head];
                         out_reg_commit_reorder <= head;
@@ -179,7 +167,7 @@ end
                     else if (type_entry[head] == `JALR) begin   //always predict fail
                         out_flush_enable       <= `TRUE;
                         out_pc_branch_pc       <= branch_entry[head];
-                        $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
+                        // $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
                         out_reg_commit_enable  <= `TRUE;                    
                         out_reg_commit_rd      <= dest_entry[head];
                         out_reg_commit_reorder <= head;
@@ -198,7 +186,7 @@ end
                 end             
                 else if (!is_store(type_entry[head]))begin                                //normal commit
                     if (type_entry[head] != `NOP) begin                        
-                        $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
+                        // $fdisplay(fd, "commit rd: ", dest_entry[head], "; commit value ", value_entry[head]);
                         out_reg_commit_enable  <= `TRUE;
                         out_reg_commit_rd      <= dest_entry[head];
                         out_reg_commit_reorder <= head;

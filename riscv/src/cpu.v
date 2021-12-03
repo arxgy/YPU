@@ -43,7 +43,6 @@ module cpu(
     wire [`ROB_WIDTH]lsb_to_rob_store_reorder;
     wire fetch_to_pc_stall;
     wire fetch_to_pc_last_enable;
-    wire [`ADDRESS_WIDTH] fetch_to_pc_last_pc;
     wire [`INSTRUCTION_WIDTH] fetch_to_pc_last_inst;
     wire pc_to_fetch_enable;
     wire [`ADDRESS_WIDTH] pc_to_fetch_pc;
@@ -110,7 +109,6 @@ module cpu(
         .in_rob_branch_pc           (rob_to_pc_branch_pc),
  
         .in_fetcher_last_enable     (fetch_to_pc_last_enable),
-        .in_fetcher_last_pc         (fetch_to_pc_last_pc),
         .in_fetcher_last_inst       (fetch_to_pc_last_inst),
         .out_fetcher_enable         (pc_to_fetch_enable),
         .out_fetcher_pc             (pc_to_fetch_pc),
@@ -129,7 +127,6 @@ module cpu(
         .in_predict                 (pc_to_fetch_predict),
         .out_pc_fetch_full          (fetch_to_pc_stall),
         .out_pc_last_enable         (fetch_to_pc_last_enable),
-        .out_pc_last_pc             (fetch_to_pc_last_pc),
         .out_pc_last_inst           (fetch_to_pc_last_inst),
 
         .out_decoder_decode_enable  (fetch_to_decode_enable),

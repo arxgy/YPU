@@ -16,7 +16,6 @@ module fetcher (
     input  wire     in_predict, 
     output wire     out_pc_fetch_full,
     output reg      out_pc_last_enable,
-    output reg      [`ADDRESS_WIDTH] out_pc_last_pc,
     output reg      [`INSTRUCTION_WIDTH] out_pc_last_inst,
     //connect with PC controller
 
@@ -39,9 +38,9 @@ module fetcher (
     reg  [1:0]                pre_entry   [`FETCH_ENTRY];
     reg                       wait_entry  [`FETCH_ENTRY];
     reg  [`FETCH_WIDTH]       head, tail, next;    
-    wire [`ADDRESS_WIDTH]     dbg_head_pc = pc_entry[head];
-    wire [1:0]                dbg_head_predict = pre_entry[head];
-    wire [1:0]                dbg_1138_predict = pre_entry[3'd3];
+    // wire [`ADDRESS_WIDTH]     dbg_head_pc = pc_entry[head];
+    // wire [1:0]                dbg_head_predict = pre_entry[head];
+    // wire [1:0]                dbg_1138_predict = pre_entry[3'd3];
     reg  empty;    
     //icache
     reg  [`TAG_WIDTH]         tag_cache   [`CACHE_ENTRY];
@@ -103,7 +102,6 @@ module fetcher (
                 if (next != tail && !wait_entry[next]) begin 
                     if (cache_hit) begin
                         out_pc_last_enable <= `TRUE;
-                        out_pc_last_pc     <=  pc_entry[next];
                         out_pc_last_inst   <=  cache_inst;
                         inst_entry[next]   <=  cache_inst;
                         next <= next + 3'd1;
@@ -117,7 +115,6 @@ module fetcher (
                 
                 if (in_pc_data_enable) begin
                     out_pc_last_enable <= `TRUE;
-                    out_pc_last_pc     <=  pc_entry[next];
                     out_pc_last_inst   <=  in_dispatch_pc_inst;
                     wait_entry[next]   <= `FALSE;
                     inst_entry[next]   <=  in_dispatch_pc_inst;

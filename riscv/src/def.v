@@ -202,6 +202,15 @@ begin\
     out_mem_data <= store_request_data[7:0];\
     out_mem_wr_signal <= `WRITE_SIGNAL;\
 end
+`define GRANT_OUT_STORE\
+begin\
+    store_stage <= `TRUE;\
+    push_status <= `STORE_STATUS;\
+    push_cycle  <=  3'd1;\
+    out_mem_addr <= store_request_addr;\
+    out_mem_data <= store_request_data[7:0];\
+    out_mem_wr_signal <= `WRITE_SIGNAL;\
+end
 `define GRANT_IDLE\
 begin\
     out_mem_addr <= `ZERO_ADDR;\

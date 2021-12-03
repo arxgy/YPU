@@ -41,7 +41,7 @@ module dispatcher (
     reg  [`DISPATCH_STATUS_WIDTH] mem_status, push_status;
     reg  [`CYCLE_COUNTER_WIDTH]   mem_cycle,  push_cycle;  
     reg  [`MEM_BUFFER_DATA_WIDTH] buffer_data;       
-
+    reg  [1:0]             store_stage;
     reg                    pc_buffering;
     reg  [`ADDRESS_WIDTH]  pc_request_addr;
     reg                    load_buffering;
@@ -57,10 +57,10 @@ module dispatcher (
     assign out_store_req_enable = !in_store_requesting && !store_buffering;
     
     wire dbg_output_store = in_store_requesting && in_store_addr[17:16] == 2'b11;
-    integer fd;
-    initial begin
-        fd = $fopen("tableOut.out", "w");
-    end
+    // integer fd;
+    // initial begin
+    //     fd = $fopen("tableOut.out", "w");
+    // end
 
     always @(posedge in_clk) begin
         if (in_rst) begin 
@@ -68,7 +68,7 @@ module dispatcher (
             mem_cycle             <=  3'd0;
             push_status           <= `IDLE_STATUS;
             push_cycle            <=  3'd0;
-
+            store_stage           <= `FALSE;
             buffer_data           <= `ZERO_DATA;
             pc_buffering          <= `FALSE;
             load_buffering        <= `FALSE;
@@ -88,7 +88,7 @@ module dispatcher (
                 end
                 push_status <= `IDLE_STATUS;
                 push_cycle  <=  3'd0;
-                
+                store_stage           <= `FALSE;
                 pc_buffering          <= `FALSE;
                 load_buffering        <= `FALSE;
                 store_buffering       <= `FALSE;
@@ -102,6 +102,9 @@ module dispatcher (
                 end
             end
             else begin
+                if (store_stage) begin
+                    store_stage <= `FALSE;
+                end
                 if (in_pc_requesting) begin
                     pc_buffering        <= `TRUE;
                     pc_request_addr     <= in_pc_addr;
@@ -184,14 +187,14 @@ module dispatcher (
                     `IDLE_STATUS: begin
                         if (pc_buffering) `GRANT_PC
                         else if (load_buffering) begin
-                            if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD
+                            if (load_request_addr[17:16] != 2'b11) `GRANT_LOAD
                             else if (store_buffering && store_request_addr[17:16] != 2'b11) `GRANT_STORE
-                            else                                                            `GRANT_IDLE
+                            else  `GRANT_IDLE
                         end
                         else if (store_buffering) begin
-                            if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE   //normal store
-                            else if (mem_status == `IDLE_STATUS)         `GRANT_STORE   //io store
-                            else                                                            `GRANT_IDLE
+                            if (store_request_addr[17:16] != 2'b11) `GRANT_STORE   //normal store
+                            else if (mem_status == `IDLE_STATUS && !io_buffer_full && !store_stage ) `GRANT_OUT_STORE   //io store
+                            else `GRANT_IDLE
                         end
                         else `GRANT_IDLE
                     end
@@ -203,14 +206,14 @@ module dispatcher (
                             3'd4: begin
                                 pc_buffering <= `FALSE;
                                 if (load_buffering) begin
-                                    if (load_request_addr[17:16] != 2'b11 )       `GRANT_LOAD
+                                    if (load_request_addr[17:16] != 2'b11 ) `GRANT_LOAD
                                     else if (store_buffering && store_request_addr[17:16] != 2'b11) `GRANT_STORE
-                                    else                                                            `GRANT_IDLE
+                                    else `GRANT_IDLE
                                 end
                                 else if(store_buffering) begin
-                                    if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE   //normal store
-                                    else if (mem_status == `IDLE_STATUS)         `GRANT_STORE   //io store
-                                    else                                                            `GRANT_IDLE
+                                    if (store_request_addr[17:16] != 2'b11) `GRANT_STORE   //normal store
+                                    else if (mem_status == `IDLE_STATUS && !io_buffer_full && !store_stage )  `GRANT_OUT_STORE   //io store
+                                    else `GRANT_IDLE
                                 end
                                 else `GRANT_IDLE
                             end
@@ -222,9 +225,9 @@ module dispatcher (
                                 if (load_request_style == `RW_BYTE) begin
                                     load_buffering <= `FALSE;
                                     if(store_buffering) begin
-                                        if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE   //normal store
-                                        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE   //io store
-                                        else                                                            `GRANT_IDLE
+                                        if (store_request_addr[17:16] != 2'b11) `GRANT_STORE   //normal store
+                                        else if (mem_status == `IDLE_STATUS && !io_buffer_full && !store_stage ) `GRANT_OUT_STORE   //io store
+                                        else  `GRANT_IDLE
                                     end
                                     else if (pc_buffering) `GRANT_PC
                                     else `GRANT_IDLE
@@ -235,9 +238,9 @@ module dispatcher (
                                 if (load_request_style == `RW_HALF_WORD) begin
                                     load_buffering <= `FALSE;
                                     if(store_buffering) begin
-                                        if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE   //normal store
-                                        else if (mem_status == `IDLE_STATUS)         `GRANT_STORE   //io store
-                                        else                                                            `GRANT_IDLE
+                                        if (store_request_addr[17:16] != 2'b11) `GRANT_STORE   //normal store
+                                        else if (mem_status == `IDLE_STATUS && !io_buffer_full && !store_stage ) `GRANT_OUT_STORE   //io store
+                                        else `GRANT_IDLE
                                     end
                                     else if (pc_buffering) `GRANT_PC
                                     else `GRANT_IDLE
@@ -248,9 +251,9 @@ module dispatcher (
                             3'd4: begin
                                 load_buffering <= `FALSE;
                                 if(store_buffering) begin
-                                    if (store_request_addr[17:16] != 2'b11)                         `GRANT_STORE   //normal store
-                                    else if (mem_status == `IDLE_STATUS)         `GRANT_STORE   //io store
-                                    else                                                            `GRANT_IDLE
+                                    if (store_request_addr[17:16] != 2'b11) `GRANT_STORE   //normal store
+                                    else if (mem_status == `IDLE_STATUS && !io_buffer_full && !store_stage ) `GRANT_OUT_STORE   //io store
+                                    else `GRANT_IDLE
                                 end
                                 else if (pc_buffering) `GRANT_PC
                                 else `GRANT_IDLE
@@ -264,8 +267,8 @@ module dispatcher (
                                     store_buffering <= `FALSE;
                                     if (pc_buffering) `GRANT_PC
                                     else if (load_buffering) begin
-                                        if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD
-                                        else                                                            `GRANT_IDLE
+                                        if (load_request_addr[17:16] != 2'b11) `GRANT_LOAD
+                                        else `GRANT_IDLE
                                     end
                                     else `GRANT_IDLE
                                 end
@@ -282,8 +285,8 @@ module dispatcher (
                                     store_buffering <= `FALSE;
                                     if (pc_buffering) `GRANT_PC
                                     else if (load_buffering) begin
-                                        if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD
-                                        else                                                            `GRANT_IDLE
+                                        if (load_request_addr[17:16] != 2'b11) `GRANT_LOAD
+                                        else `GRANT_IDLE
                                     end
                                     else `GRANT_IDLE
                                 end
@@ -306,8 +309,8 @@ module dispatcher (
                                 store_buffering <= `FALSE;
                                 if (pc_buffering) `GRANT_PC
                                 else if (load_buffering) begin
-                                    if (load_request_addr[17:16] != 2'b11)       `GRANT_LOAD
-                                    else                                                            `GRANT_IDLE
+                                    if (load_request_addr[17:16] != 2'b11) `GRANT_LOAD
+                                    else `GRANT_IDLE
                                 end
                                 else `GRANT_IDLE
                             end

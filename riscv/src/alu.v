@@ -24,10 +24,6 @@ module alu (
     always @(*) begin
         if (in_enable) begin
             case (type)
-                `NOP: begin
-                    out_cdb_broadcast_result = `ZERO_DATA;
-                    out_cdb_broadcast_branch = `ZERO_ADDR;
-                end
                 `LUI: begin
                     out_cdb_broadcast_result = imm;  
                     out_cdb_broadcast_branch = `ZERO_ADDR;
@@ -150,6 +146,10 @@ module alu (
                 end
                     
             endcase
+        end
+        else begin
+            out_cdb_broadcast_result = `ZERO_DATA;
+            out_cdb_broadcast_branch = `ZERO_ADDR;     
         end
     end
 endmodule //alu

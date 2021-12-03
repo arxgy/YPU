@@ -25,12 +25,15 @@ initial begin
     //   $finish;
     // end
   end
+  // forever begin
+  //   #1000 rdy = !rdy;
+  // end
   
   $finish;
 end
 
 initial begin
-  $dumpfile("testbench1.vcd");
+  $dumpfile("testbench.vcd");
   $dumpvars;
 end
 endmodule
