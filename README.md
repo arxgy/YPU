@@ -24,5 +24,3 @@ Thanks Sirius, Pioooooo, XOR-op, happypig for answering questions and giving sug
 Thanks Lhtie for playing Overwatch with me, which helped me a lot on releasing pressures.
 
 And at last, thanks Diana for no reasons.
-
-![Diana](.\Diana.jpg)
