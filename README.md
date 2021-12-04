@@ -14,6 +14,7 @@ A toy CPU based on tomasulo algorithm, supporting part of RV32I Instruction set.
 - Reorder buffer of 16 entries.
 - Well performance with relatively less hardware overhead.
 - Pass all testcases on simulation and FPGA.
+- Due to positive delay on 100MHz, YPU is quite possible to support higher frequencies. **(not test yet)**
 
 
 
