@@ -19,9 +19,11 @@
 `define MEM_WIDTH 7:0
 `define FETCH_WIDTH 2:0
 `define QUEUE_WIDTH 3:0
-`define TAG_WIDTH 9:0
-`define INDEX_WIDTH 7:0
+`define TAG_WIDTH 6:0
+`define INDEX_WIDTH 10:0
 `define TAKEN_WIDTH 1:0
+`define TAG_FIELD 17:11
+`define INDEX_FIELD 10:0
 //define array
 `define REG_ENTRY 31:0
 `define RS_ENTRY  15:0
@@ -29,7 +31,7 @@
 `define ROB_ENTRY 15:0
 `define FETCH_ENTRY 7:0
 `define QUEUE_ENTRY 15:0
-`define CACHE_ENTRY 255:0
+`define CACHE_ENTRY 2047:0
 `define PREDICT_ENTRY 1023:0
 
 `define INST_TYPE_WIDTH 6:0
@@ -44,7 +46,7 @@
 `define MEM_SIZE 256
 `define FETCH_SIZE 8
 `define QUEUE_SIZE 16
-`define CACHE_SIZE 256
+`define CACHE_SIZE 2048
 `define PREDICT_SIZE 1024
 //default value
 `define NOP_INSTR 32'b0 

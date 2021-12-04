@@ -50,8 +50,8 @@ module fetcher (
     integer                   queue_iter, cache_iter;
     assign                    out_pc_fetch_full = (head == tail + 3'd1 || (head == tail && !empty));
    
-    wire [`INDEX_WIDTH]       pc_index   = pc_entry[next][7:0];
-    wire                      cache_hit  = valid_cache[pc_index] && tag_cache[pc_index] == pc_entry[next][17:8];
+    wire [`INDEX_WIDTH]       pc_index   = pc_entry[next][10:0];
+    wire                      cache_hit  = valid_cache[pc_index] && tag_cache[pc_index] == pc_entry[next][17:11];
     wire [`INSTRUCTION_WIDTH] cache_inst = inst_cache[pc_index];
     wire [`FETCH_WIDTH] tail_prev = tail == 3'd0 ? 3'd7 : tail-3'd1;
     always @(posedge in_clk) begin
@@ -120,7 +120,7 @@ module fetcher (
                     inst_entry[next]   <=  in_dispatch_pc_inst;
                     
                     valid_cache[pc_index] <= `TRUE;
-                    tag_cache  [pc_index] <=  pc_entry[next][17:8];
+                    tag_cache  [pc_index] <=  pc_entry[next][17:11];
                     inst_cache [pc_index] <=  in_dispatch_pc_inst;
                     next <= next + 3'd1;
                 end
